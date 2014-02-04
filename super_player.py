@@ -18,10 +18,8 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 """
 
 import random
-
 from quoridor import *
 import mcts
-
 
 class MyAgent(Agent):
 
@@ -35,7 +33,7 @@ class MyAgent(Agent):
         """
         self.player = player
         state = (dict_to_board(percepts), player)
-        return mcts.search(state)
+        return mcts.search(state, step, time_left)
 
 
 if __name__ == "__main__":

@@ -9,14 +9,16 @@ class Node:
     """ A node in the game tree. Note wins is always from the viewpoint of playerJustMoved.
         Crashes if state not specified.
     """
-    def __init__(self, move = None, parent = None, state = None):
+    def __init__(self, move = None, parent = None, state = None, step = 0, time_left = 0):
         self.board, self.player = state
         self.move = move # the move that got us to this node - "None" for the root node
+        self.step = step # step played
+        self.time_left = time_left # time left
         self.parentNode = parent # "None" for the root node
         self.childNodes = []
         self.wins = 0
         self.visits = 0
-        self.untriedMoves = get_moves(self.board, self.player) # future child nodes
+        self.untriedMoves = get_moves(self.board, self.player, self.step, self.time_left) # future child nodes
 
     def UCTSelectChild(self):
         """ Use the UCB1 formula to select a child node. Often a constant UCTK is applied so we have
@@ -26,11 +28,11 @@ class Node:
         s = sorted(self.childNodes, key = lambda c: c.wins/c.visits + sqrt(2*log(self.visits)/c.visits))[-1]
         return s
 
-    def AddChild(self, m, s):
+    def AddChild(self, m, s, step, time_left):
         """ Remove m from untriedMoves and add a new child node for this move.
             Return the added child node
         """
-        n = Node(move = m, parent = self, state = s)
+        n = Node(move = m, parent = self, state = s, step=step)
 
         board,player = s
         #print("Add child with move:")
@@ -48,7 +50,7 @@ class Node:
         self.visits += 1
         self.wins += result
 
-def UCT(step, time_left, rootstate, itermax):
+def UCT(rootstate, itermax, step, time_left):
     """ Conduct a UCT search for itermax iterations starting from rootstate.
         Return the best move from the rootstate.
         Assumes 2 alternating players (player 1 starts), with game results in the range [0.0, 1.0]."""
@@ -94,7 +96,7 @@ def UCT(step, time_left, rootstate, itermax):
             print("player is playing:", node.player)
             #print("new board:")
             #print(board)
-            node = node.AddChild(m, state) # add child and descend tree
+            node = node.AddChild(m, state, step, time_left) # add child and descend tree
 
         #print("Rollout player is:", player)
 
@@ -146,10 +148,9 @@ def search(state, step, time_left):
     else:
         itermax = 100
 
-    board, player = state
     print("START UCT!")
     start = clock()
-    move = UCT(step, time_left, rootstate=state, itermax=itermax)
+    move = UCT(rootstate=state, itermax=itermax, step=step, time_left=time_left)
     print("NEXT MOVE IS:")
     print(move)
     end = clock() - start
