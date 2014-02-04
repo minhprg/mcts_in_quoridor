@@ -142,9 +142,9 @@ def UCT(rootstate, itermax, verbose = False, step, time_left):
 def search(state, step, time_left):
     # step pre-process
     if (step <= 10):
-        itermax = 100
+        itermax = 20
     else:
-        itermax = 1000
+        itermax = 100
 
     board, player = state
     print("START UCT!")
