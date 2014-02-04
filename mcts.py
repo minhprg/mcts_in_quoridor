@@ -3,6 +3,7 @@ import random
 from quoridor import *
 import copy
 import threading
+from time import *
 
 class Node:
     """ A node in the game tree. Note wins is always from the viewpoint of playerJustMoved.
@@ -141,9 +142,12 @@ def UCT(rootstate, itermax, verbose = False):
 def search(state):
     board, player = state
     print("START UCT!")
+    start = clock()
     move = UCT(rootstate=state, itermax=20, verbose=False)
     print("NEXT MOVE IS:")
     print(move)
+    end = clock() - start
+    print("THINKING TIME: ", end)
     return move
 
 
