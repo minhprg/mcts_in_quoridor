@@ -2,6 +2,7 @@ from math import *
 import random
 from quoridor import *
 import copy
+import threading
 
 class Node:
     """ A node in the game tree. Note wins is always from the viewpoint of playerJustMoved.
@@ -106,7 +107,6 @@ def UCT(rootstate, itermax, verbose = False):
             rollmove = random.choice(get_moves(rollboard, rollplayer))
             rollboard.play_action(rollmove, rollplayer)
             rollplayer = (rollplayer + 1) % 2
-
             # keepalive
             keepalive +=1
             if keepalive % 2 == 0:
@@ -187,4 +187,3 @@ def get_advanced_moves(board, player):
 
                     moves.append (move)
     return moves
-
