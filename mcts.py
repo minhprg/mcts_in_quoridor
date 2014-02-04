@@ -48,7 +48,7 @@ class Node:
         self.visits += 1
         self.wins += result
 
-def UCT(rootstate, itermax, verbose = False):
+def UCT(rootstate, itermax, verbose = False, step, time_left):
     """ Conduct a UCT search for itermax iterations starting from rootstate.
         Return the best move from the rootstate.
         Assumes 2 alternating players (player 1 starts), with game results in the range [0.0, 1.0]."""
@@ -105,7 +105,7 @@ def UCT(rootstate, itermax, verbose = False):
         keepalive = 0
         print("3. ROLLOUT...", rollplayer)
         while rollboard.is_finished() is False: # while state is non-terminal
-            rollmove = random.choice(get_moves(rollboard, rollplayer))
+            rollmove = random.choice(get_moves(rollboard, rollplayer, step, time_left))
             rollboard.play_action(rollmove, rollplayer)
             rollplayer = (rollplayer + 1) % 2
             # keepalive
@@ -139,11 +139,17 @@ def UCT(rootstate, itermax, verbose = False):
 
     return sorted(rootnode.childNodes, key = lambda c: c.visits)[-1].move # return the move that was most visited
 
-def search(state):
+def search(state, step, time_left):
+    # step pre-process
+    if (step <= 10):
+        itermax = 100
+    else:
+        itermax = 1000
+
     board, player = state
     print("START UCT!")
     start = clock()
-    move = UCT(rootstate=state, itermax=10000, verbose=False)
+    move = UCT(rootstate=state, itermax=itermax, verbose=False, step, time_left)
     print("NEXT MOVE IS:")
     print(move)
     end = clock() - start
@@ -155,14 +161,21 @@ def search(state):
 '''
 Get successors strategy
 '''
-def get_moves(board, player):
+def get_moves(board, player, step, time_left):
+    if (step <= 10):
+        return get_wall_moves(board, player)
+    else:
+        return get_all_actions(board, player)
     #return get_simple_moves(board, player)
-    return get_all_actions(board, player)
     #return get_advanced_moves(board, player)
 
 # get simple legal pawn moves - for testing
 def get_simple_moves(board, player):
     return board.get_legal_pawn_moves(player)
+
+# get wall moves
+def get_wall_moves(board, player):
+    return board.get_legal_wall_moves(player)
 
 # all actions
 def get_all_actions(board, player):
