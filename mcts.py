@@ -48,7 +48,7 @@ class Node:
         self.visits += 1
         self.wins += result
 
-def UCT(rootstate, itermax, step, time_left):
+def UCT(step, time_left, rootstate, itermax):
     """ Conduct a UCT search for itermax iterations starting from rootstate.
         Return the best move from the rootstate.
         Assumes 2 alternating players (player 1 starts), with game results in the range [0.0, 1.0]."""
@@ -149,7 +149,7 @@ def search(state, step, time_left):
     board, player = state
     print("START UCT!")
     start = clock()
-    move = UCT(rootstate=state, itermax=itermax, step, time_left)
+    move = UCT(step, time_left, rootstate=state, itermax=itermax)
     print("NEXT MOVE IS:")
     print(move)
     end = clock() - start
