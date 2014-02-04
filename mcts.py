@@ -156,8 +156,8 @@ def search(state):
 Get successors strategy
 '''
 def get_moves(board, player):
-    return get_simple_moves(board, player)
-    #return get_all_actions(board, player)
+    #return get_simple_moves(board, player)
+    return get_all_actions(board, player)
     #return get_advanced_moves(board, player)
 
 # get simple legal pawn moves - for testing
