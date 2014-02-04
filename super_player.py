@@ -23,7 +23,7 @@ from quoridor import *
 import mcts
 
 
-class MyAgent(Agent, minimax.Game):
+class MyAgent():
 
     """My Quoridor agent."""
 
@@ -113,10 +113,6 @@ class MyAgent(Agent, minimax.Game):
         """
         self.player = player
         state = (dict_to_board(percepts), player)
-
-        #if (step <= 12):
-        #return minimax.search(state, self)
-        #else:
         return mcts.search(state)
 
 
