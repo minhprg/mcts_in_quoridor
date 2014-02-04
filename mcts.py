@@ -107,7 +107,7 @@ def UCT(rootstate, itermax, step, time_left):
         keepalive = 0
         print("3. ROLLOUT...", rollplayer)
         while rollboard.is_finished() is False: # while state is non-terminal
-            rollmove = random.choice(get_moves(rollboard, rollplayer, step, time_left))
+            rollmove = random.choice(rollboard.get_actions(rollplayer))
             rollboard.play_action(rollmove, rollplayer)
             rollplayer = (rollplayer + 1) % 2
             # keepalive
@@ -144,11 +144,11 @@ def UCT(rootstate, itermax, step, time_left):
 def search(state, step, time_left):
     # step pre-process
     if (step <= 10):
-        itermax = 20
+        itermax = 10
     else:
         itermax = 100
 
-    print("START UCT!")
+    print("START UCT! Step:", step)
     start = clock()
     move = UCT(rootstate=state, itermax=itermax, step=step, time_left=time_left)
     print("NEXT MOVE IS:")
@@ -164,7 +164,7 @@ Get successors strategy
 '''
 def get_moves(board, player, step, time_left):
     if (step <= 10):
-        return get_wall_moves(board, player)
+        return get_advanced_moves(board, player)
     else:
         return get_all_actions(board, player)
     #return get_simple_moves(board, player)
