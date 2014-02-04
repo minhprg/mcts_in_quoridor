@@ -20,7 +20,6 @@ along with this program; if not, see <http://www.gnu.org/licenses/>.
 import random
 
 from quoridor import *
-import minimax
 import mcts
 
 
