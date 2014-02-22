@@ -25,7 +25,7 @@ def MCTS(rootstate, itermax, step, time_left):
         # Selection
         while node.untriedMoves == [] and node.childNodes != []: # node is fully expanded and non-terminal
             print("1. SELECTION")
-            node = node.UCTSelectChild()
+            node = node.UCT()
             print("Move:", node.move)
             board = node.board
             player = node.player
@@ -36,6 +36,9 @@ def MCTS(rootstate, itermax, step, time_left):
             m = random.choice(node.untriedMoves)
             state = (node.board.clone().play_action(m, node.player), (node.player+1)%2)
             node = node.AddChild(m, state, step, time_left) # add child and descend tree
+            # update player and board
+            board = node.board
+            player = node.player
 
         # Rollout - Simulation
         rollplayer = copy.deepcopy(player)
@@ -44,7 +47,7 @@ def MCTS(rootstate, itermax, step, time_left):
         keepalive = 0
         print("3. ROLLOUT - SIMULATION...", rollplayer)
         while rollboard.is_finished() is False: # while state is non-terminal
-            rollmove = random.choice(rollboard.get_actions(rollplayer))
+            rollmove = random.choice(get_advanced_moves(rollboard, rollplayer))
             rollboard.play_action(rollmove, rollplayer)
             rollplayer = (rollplayer + 1) % 2
             # keepalive
@@ -78,6 +81,8 @@ def search(state, step, time_left):
     print("START MCTS! Step:", step)
     start = clock()
     move = MCTS(rootstate=state, itermax=itermax, step=step, time_left=time_left)
+    board, player = state
+    print(get_advanced_moves(board, player))
     print("NEXT MOVE IS:")
     print(move)
     end = clock() - start

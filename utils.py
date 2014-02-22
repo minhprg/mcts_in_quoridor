@@ -24,24 +24,24 @@ def get_all_actions(board, player):
 
 # get moves from advanced player
 def get_advanced_moves(board, player):
-    moves = []
-    for move in board.get_legal_pawn_moves(player):
-        moves.append (move)
+    moves = board.get_legal_pawn_moves(player)
+    #for move in board.get_legal_pawn_moves(player):
+        #d0 = board.get_shortest_path_simplified(player)
+        #d1 = board.clone().play_action(move, player).get_shortest_path_simplified(player)
+        #if (d1 <= d0):
+        #moves.append (move)
 
     opponent_position = board.pawns[(player + 1) % 2]
-    wall_adjacent_consider_level = 1
+    x = opponent_position[0];
+    y = opponent_position[1];
+    positions = [(x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1),
+        (x + 1, y + 1), (x - 1, y - 1), (x + 1, y - 1), (x - 1, y + 1),
+        (x + 2, y), (x - 2, y), (x, y + 2), (x, y - 2)]
 
-    if wall_adjacent_consider_level == 1:
-        for move in board.get_legal_wall_moves(player):
-            import math
-            if math.fabs(opponent_position[0] - move[1]) < 2 and math.fabs(opponent_position[1] - move[2]) < 2:
-                if move[1] - opponent_position[0] < 1 and move[2] - opponent_position[1] < 1:
-                    moves.append(move)
-    else:
-        for move in board.get_legal_wall_moves(player):
-            import math
-            if math.fabs(opponent_position[0] - move[1]) < 3 and math.fabs(opponent_position[1] - move[2]) < 3:
-                if move[1] - opponent_position[0] < 2 and move[2] - opponent_position[1] < 2:
+    for pos in positions:
+        if board.is_wall_possible_here(pos, True):
+            moves.append(('WH', pos[0], pos[1]))
+        if board.is_wall_possible_here(pos, False):
+            moves.append(('WV', pos[0], pos[1]))
 
-                    moves.append (move)
     return moves
