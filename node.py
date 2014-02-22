@@ -1,4 +1,5 @@
 from utils import *
+from math import *
 
 class Node:
     def __init__(self, move = None, parent = None, state = None, step = 0, time_left = 0):
@@ -10,7 +11,7 @@ class Node:
         self.childNodes = []
         self.wins = 0
         self.visits = 0
-        self.untriedMoves = get_advanced_moves(self.board, self.player) # future child nodes
+        self.untriedMoves = self.board.get_legal_pawn_moves(self.player) # future child nodes
 
     def UCT(self):
         s = sorted(self.childNodes, key = lambda c: c.wins/c.visits + sqrt(2*log(self.visits)/c.visits))[-1]
