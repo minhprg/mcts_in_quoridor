@@ -3,9 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6ecc2b85-eda4-4e8c-9358-18df2652d401" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mcts.py" afterPath="$PROJECT_DIR$/mcts.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/mcts_in_quoridor.iml" afterPath="$PROJECT_DIR$/.idea/mcts_in_quoridor.iml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node.py" afterPath="$PROJECT_DIR$/node.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="mcts_in_quoridor.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,19 +26,19 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="mcts.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="mcts.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mcts.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1335">
+            <state line="49" column="77" selection-start="1663" selection-end="1663" vertical-scroll-proportion="0.625" vertical-offset="255" max-vertical-offset="1335">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="node.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="node.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="2" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.05" vertical-offset="0" max-vertical-offset="645">
+            <state line="13" column="70" selection-start="562" selection-end="562" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="645">
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -86,8 +84,8 @@
       <list>
         <option value="$PROJECT_DIR$/simulations.py" />
         <option value="$PROJECT_DIR$/utils.py" />
-        <option value="$PROJECT_DIR$/mcts.py" />
         <option value="$PROJECT_DIR$/node.py" />
+        <option value="$PROJECT_DIR$/mcts.py" />
       </list>
     </option>
   </component>
@@ -487,6 +485,15 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/node.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="13" column="70" selection-start="562" selection-end="562" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="645">
+          <folding>
+            <element signature="e#0#19#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="26" column="46" selection-start="730" selection-end="730" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="780">
@@ -496,17 +503,8 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mcts.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1335">
+        <state line="49" column="77" selection-start="1663" selection-end="1663" vertical-scroll-proportion="0.625" vertical-offset="255" max-vertical-offset="1335">
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="0" selection-start="39" selection-end="39" vertical-scroll-proportion="0.05" vertical-offset="0" max-vertical-offset="645">
-          <folding>
-            <element signature="e#0#19#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>

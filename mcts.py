@@ -47,7 +47,7 @@ def MCTS(rootstate, itermax, step, time_left):
         keepalive = 0
         print("3. ROLLOUT - SIMULATION...", rollplayer)
         while rollboard.is_finished() is False: # while state is non-terminal
-            rollmove = random.choice(rollboard.get_legal_pawn_moves(rollplayer))
+            rollmove = random.choice(get_advanced_moves(rollboard, rollplayer))
             rollboard.play_action(rollmove, rollplayer)
             rollplayer = (rollplayer + 1) % 2
             # keepalive
