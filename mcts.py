@@ -37,8 +37,7 @@ def MCTS(rootstate, itermax, step, time_left):
             state = (node.board.clone().play_action(m, node.player), (node.player+1)%2)
             node = node.AddChild(m, state, step, time_left) # add child and descend tree
             # update player and board
-            board = node.board
-            player = node.player
+            board, player = state
 
         # Rollout - Simulation
         rollplayer = copy.deepcopy(player)
@@ -51,8 +50,8 @@ def MCTS(rootstate, itermax, step, time_left):
             rollboard.play_action(rollmove, rollplayer)
             rollplayer = (rollplayer + 1) % 2
             # keepalive
-            keepalive +=1
-            print("Still running...", keepalive)
+            #keepalive +=1
+            #print("Still running...", keepalive)
 
         # Backpropagate
         while node != None: # backpropagate from the expanded node and work back to the root node
