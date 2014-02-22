@@ -3,6 +3,7 @@
   <component name="ChangeListManager">
     <list default="true" id="6ecc2b85-eda4-4e8c-9358-18df2652d401" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mcts.py" afterPath="$PROJECT_DIR$/mcts.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="mcts_in_quoridor.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -28,7 +29,7 @@
       <file leaf-file-name="mcts.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mcts.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="52" column="13" selection-start="1775" selection-end="1775" vertical-scroll-proportion="0.575" vertical-offset="330" max-vertical-offset="1320">
+            <state line="48" column="80" selection-start="1587" selection-end="1636" vertical-scroll-proportion="0.525" vertical-offset="300" max-vertical-offset="1320">
               <folding />
             </state>
           </provider>
@@ -37,7 +38,7 @@
       <file leaf-file-name="node.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="16" column="67" selection-start="672" selection-end="672" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="645">
+            <state line="13" column="71" selection-start="521" selection-end="563" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="645">
               <folding>
                 <element signature="e#0#19#0" expanded="true" />
               </folding>
@@ -48,7 +49,7 @@
       <file leaf-file-name="utils.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="46" selection-start="730" selection-end="730" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="780">
+            <state line="24" column="32" selection-start="644" selection-end="644" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="780">
               <folding />
             </state>
           </provider>
@@ -486,14 +487,14 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="46" selection-start="730" selection-end="730" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="780">
+        <state line="24" column="32" selection-start="644" selection-end="644" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="780">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/node.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="16" column="67" selection-start="672" selection-end="672" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="645">
+        <state line="13" column="71" selection-start="521" selection-end="563" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="645">
           <folding>
             <element signature="e#0#19#0" expanded="true" />
           </folding>
@@ -502,7 +503,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/mcts.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="52" column="13" selection-start="1775" selection-end="1775" vertical-scroll-proportion="0.575" vertical-offset="330" max-vertical-offset="1320">
+        <state line="48" column="80" selection-start="1587" selection-end="1636" vertical-scroll-proportion="0.525" vertical-offset="300" max-vertical-offset="1320">
           <folding />
         </state>
       </provider>
