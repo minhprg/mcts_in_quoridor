@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ecc2b85-eda4-4e8c-9358-18df2652d401" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mcts.py" afterPath="$PROJECT_DIR$/mcts.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/mcts_in_quoridor.iml" afterPath="$PROJECT_DIR$/.idea/mcts_in_quoridor.iml" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/utils.py" afterPath="$PROJECT_DIR$/utils.py" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/node.py" afterPath="$PROJECT_DIR$/node.py" />
     </list>
     <ignored path="mcts_in_quoridor.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -40,7 +37,7 @@
       <file leaf-file-name="node.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/node.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="12" column="52" selection-start="512" selection-end="525" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
+            <state line="12" column="70" selection-start="543" selection-end="543" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
               <folding />
             </state>
           </provider>
@@ -49,7 +46,7 @@
       <file leaf-file-name="utils.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/utils.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="26" column="45" selection-start="729" selection-end="729" vertical-scroll-proportion="0.35" vertical-offset="180" max-vertical-offset="780">
+            <state line="33" column="53" selection-start="1039" selection-end="1039" vertical-scroll-proportion="0.525" vertical-offset="180" max-vertical-offset="780">
               <folding />
             </state>
           </provider>
@@ -84,8 +81,8 @@
       <list>
         <option value="$PROJECT_DIR$/simulations.py" />
         <option value="$PROJECT_DIR$/mcts.py" />
-        <option value="$PROJECT_DIR$/node.py" />
         <option value="$PROJECT_DIR$/utils.py" />
+        <option value="$PROJECT_DIR$/node.py" />
       </list>
     </option>
   </component>
@@ -454,13 +451,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="12" column="52" selection-start="512" selection-end="525" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/mcts.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="86" column="4" selection-start="3002" selection-end="3002" vertical-scroll-proportion="0.0" vertical-offset="735" max-vertical-offset="1335">
@@ -468,9 +458,16 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/node.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="12" column="70" selection-start="543" selection-end="543" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="630">
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="26" column="45" selection-start="729" selection-end="729" vertical-scroll-proportion="0.35" vertical-offset="180" max-vertical-offset="780">
+        <state line="33" column="53" selection-start="1039" selection-end="1039" vertical-scroll-proportion="0.525" vertical-offset="180" max-vertical-offset="780">
           <folding />
         </state>
       </provider>

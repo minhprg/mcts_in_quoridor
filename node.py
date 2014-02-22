@@ -10,7 +10,7 @@ class Node:
         self.childNodes = []
         self.wins = 0
         self.visits = 0
-        self.untriedMoves = self.board.get_actions(self.player) # future child nodes
+        self.untriedMoves = get_advanced_moves(self.board, self.player) # future child nodes
 
     def UCT(self):
         s = sorted(self.childNodes, key = lambda c: c.wins/c.visits + sqrt(2*log(self.visits)/c.visits))[-1]
