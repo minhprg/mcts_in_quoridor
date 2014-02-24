@@ -2,6 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="6ecc2b85-eda4-4e8c-9358-18df2652d401" name="Default" comment="">
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/helpers.py" />
+      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/mcts_node.py" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/node.py" afterPath="" />
+      <change type="DELETED" beforePath="$PROJECT_DIR$/utils.py" afterPath="" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mcts.py" afterPath="$PROJECT_DIR$/mcts.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
@@ -26,40 +30,64 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="mcts.py" pinned="false" current="true" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/mcts.py">
+      <file leaf-file-name="mcts_node.py" pinned="false" current="true" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/mcts_node.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="48" column="80" selection-start="1587" selection-end="1636" vertical-scroll-proportion="0.525" vertical-offset="300" max-vertical-offset="1320">
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="node.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/node.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state line="13" column="71" selection-start="521" selection-end="563" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="645">
+            <state line="32" column="25" selection-start="1110" selection-end="1110" vertical-scroll-proportion="0.25" vertical-offset="330" max-vertical-offset="1155">
               <folding>
-                <element signature="e#0#19#0" expanded="true" />
+                <element signature="e#0#21#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="utils.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/utils.py">
+      <file leaf-file-name="mcts_omc.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mcts_omc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="24" column="32" selection-start="644" selection-end="644" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="780">
+            <state line="27" column="0" selection-start="746" selection-end="746" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="1425">
+              <folding>
+                <element signature="e#0#11#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mcts_uct.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/mcts_uct.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="75" column="9" selection-start="2637" selection-end="2637" vertical-scroll-proportion="0.0" vertical-offset="510" max-vertical-offset="1470">
+              <folding>
+                <element signature="e#0#18#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="player_uct.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/player_uct.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="35" column="29" selection-start="1168" selection-end="1168" vertical-scroll-proportion="0.0" vertical-offset="57" max-vertical-offset="660">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="quoridor.py" pinned="false" current="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/quoridor.py">
+      <file leaf-file-name="player_omc.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/player_omc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="436" column="24" selection-start="16880" selection-end="16880" vertical-scroll-proportion="0.0" vertical-offset="6386" max-vertical-offset="9135">
+            <state line="14" column="12" selection-start="546" selection-end="546" vertical-scroll-proportion="0.0" vertical-offset="27" max-vertical-offset="660">
               <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="helpers.py" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/helpers.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="33" column="13" selection-start="777" selection-end="777" vertical-scroll-proportion="0.0" vertical-offset="330" max-vertical-offset="1830">
+              <folding>
+                <element signature="e#0#20#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -83,9 +111,16 @@
     <option name="changedFiles">
       <list>
         <option value="$PROJECT_DIR$/simulations.py" />
+        <option value="$PROJECT_DIR$/mcts.py" />
         <option value="$PROJECT_DIR$/utils.py" />
         <option value="$PROJECT_DIR$/node.py" />
-        <option value="$PROJECT_DIR$/mcts.py" />
+        <option value="$PROJECT_DIR$/search.py" />
+        <option value="$PROJECT_DIR$/player_omc.py" />
+        <option value="$PROJECT_DIR$/player_uct.py" />
+        <option value="$PROJECT_DIR$/mcts_uct.py" />
+        <option value="$PROJECT_DIR$/mcts_node.py" />
+        <option value="$PROJECT_DIR$/helpers.py" />
+        <option value="$PROJECT_DIR$/mcts_omc.py" />
       </list>
     </option>
   </component>
@@ -120,6 +155,7 @@
       <sortByType />
     </navigator>
     <panes>
+      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <PATH>
@@ -140,7 +176,6 @@
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -241,9 +276,6 @@
       <option name="PARAMETERS" value="" />
       <method />
     </configuration>
-    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
-      <method />
-    </configuration>
     <configuration default="true" type="tests" factoryName="Unittests">
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -265,6 +297,9 @@
       <option name="PUREUNITTEST" value="true" />
       <option name="PARAMS" value="" />
       <option name="USE_PARAM" value="false" />
+      <method />
+    </configuration>
+    <configuration default="true" type="JavascriptDebugType" factoryName="JavaScript Debug" singleton="true">
       <method />
     </configuration>
     <configuration default="true" type="tests" factoryName="Doctests">
@@ -336,13 +371,13 @@
     <servers />
   </component>
   <component name="ToolWindowManager">
-    <frame x="0" y="22" width="1366" height="697" extended-state="0" />
+    <frame x="0" y="22" width="1366" height="697" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="-1" side_tool="false" content_ui="tabs" />
+      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24963397" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -352,11 +387,11 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
+      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
     </layout>
   </component>
   <component name="Vcs.Log.UiProperties">
@@ -376,95 +411,168 @@
     <breakpoint-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/mcts.py">
+    <entry file="file://$PROJECT_DIR$/mcts_node.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="25" column="37" selection-start="573" selection-end="573" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1365">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="2" column="11" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="630">
+        <state line="42" column="13" selection-start="1434" selection-end="1434" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1155">
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#21#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils.py">
+    <entry file="file://$PROJECT_DIR$/mcts_omc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="23" column="0" selection-start="515" selection-end="515" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="1455">
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mcts_uct.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="64" column="10" selection-start="2333" selection-end="2333" vertical-scroll-proportion="0.0" vertical-offset="105" max-vertical-offset="1455">
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/player_uct.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="23" selection-start="1162" selection-end="1162" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="690">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/player_omc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="6" column="24" selection-start="197" selection-end="197" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="690">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helpers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="43" column="16" selection-start="1388" selection-end="1388" vertical-scroll-proportion="0.0" vertical-offset="135" max-vertical-offset="735">
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/quoridor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="328" column="21" selection-start="12882" selection-end="12882" vertical-scroll-proportion="0.0" vertical-offset="4920" max-vertical-offset="9165">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mcts.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="25" column="37" selection-start="573" selection-end="573" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1365">
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mcts_node.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="2" column="11" selection-start="32" selection-end="32" vertical-scroll-proportion="0.0" vertical-offset="30" max-vertical-offset="630">
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helpers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="16" column="16" selection-start="441" selection-end="441" vertical-scroll-proportion="0.0" vertical-offset="240" max-vertical-offset="585">
-          <folding />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mcts.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="25" column="37" selection-start="573" selection-end="573" vertical-scroll-proportion="0.0" vertical-offset="375" max-vertical-offset="1260">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="0" selection-start="1053" selection-end="1053" vertical-scroll-proportion="0.0" vertical-offset="525" max-vertical-offset="630">
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils.py">
+    <entry file="file://$PROJECT_DIR$/mcts_node.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="0" selection-start="1053" selection-end="1053" vertical-scroll-proportion="0.0" vertical-offset="525" max-vertical-offset="630">
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helpers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="51" selection-start="750" selection-end="750" vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="780">
-          <folding />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mcts.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="33" column="85" selection-start="926" selection-end="1268" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1260">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="35" column="0" selection-start="1053" selection-end="1053" vertical-scroll-proportion="0.0" vertical-offset="525" max-vertical-offset="630">
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils.py">
+    <entry file="file://$PROJECT_DIR$/mcts_node.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="0" selection-start="1053" selection-end="1053" vertical-scroll-proportion="0.0" vertical-offset="525" max-vertical-offset="630">
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helpers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="27" column="51" selection-start="750" selection-end="750" vertical-scroll-proportion="0.0" vertical-offset="405" max-vertical-offset="780">
-          <folding />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mcts.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="54" column="46" selection-start="1771" selection-end="1771" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="1590">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/node.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="810">
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#0#18#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/utils.py">
+    <entry file="file://$PROJECT_DIR$/mcts_node.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="810">
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helpers.py">
       <provider selected="true" editor-type-id="text-editor">
         <state line="24" column="2" selection-start="614" selection-end="614" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="780">
-          <folding />
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
@@ -478,33 +586,92 @@
         <state line="0" column="0" selection-start="0" selection-end="0" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="574" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/quoridor.py">
+    <entry file="file://$PROJECT_DIR$/super_player.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="436" column="24" selection-start="16880" selection-end="16880" vertical-scroll-proportion="0.0" vertical-offset="6236" max-vertical-offset="9135">
+        <state line="15" column="36" selection-start="0" selection-end="1241" vertical-scroll-proportion="0.375" vertical-offset="0" max-vertical-offset="660">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/utils.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="24" column="32" selection-start="644" selection-end="644" vertical-scroll-proportion="0.0" vertical-offset="180" max-vertical-offset="780">
+        <state line="18" column="34" selection-start="806" selection-end="806" vertical-scroll-proportion="0.45" vertical-offset="0" max-vertical-offset="1320">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/node.py">
+    <entry file="file://$PROJECT_DIR$/quoridor.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="13" column="71" selection-start="521" selection-end="563" vertical-scroll-proportion="0.0" vertical-offset="45" max-vertical-offset="645">
+        <state line="350" column="12" selection-start="13615" selection-end="13616" vertical-scroll-proportion="0.33275262" vertical-offset="5029" max-vertical-offset="9135">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/search.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="123" column="17" selection-start="4987" selection-end="4987" vertical-scroll-proportion="0.63666666" vertical-offset="1463" max-vertical-offset="4155">
           <folding>
-            <element signature="e#0#19#0" expanded="true" />
+            <element signature="e#198#217#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/player_uct.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="35" column="29" selection-start="1168" selection-end="1168" vertical-scroll-proportion="0.0" vertical-offset="60" max-vertical-offset="660">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mcts.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="48" column="80" selection-start="1587" selection-end="1636" vertical-scroll-proportion="0.525" vertical-offset="300" max-vertical-offset="1320">
+        <state line="58" column="16" selection-start="2040" selection-end="2040" vertical-scroll-proportion="1.45" vertical-offset="0" max-vertical-offset="1425">
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/player_omc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="14" column="12" selection-start="546" selection-end="546" vertical-scroll-proportion="0.0" vertical-offset="27" max-vertical-offset="660">
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/helpers.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="33" column="13" selection-start="777" selection-end="777" vertical-scroll-proportion="0.0" vertical-offset="330" max-vertical-offset="1830">
+          <folding>
+            <element signature="e#0#20#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mcts_uct.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="75" column="9" selection-start="2637" selection-end="2637" vertical-scroll-proportion="0.0" vertical-offset="855" max-vertical-offset="1470">
+          <folding>
+            <element signature="e#0#18#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mcts_omc.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="27" column="0" selection-start="746" selection-end="746" vertical-scroll-proportion="0.0" vertical-offset="120" max-vertical-offset="1425">
+          <folding>
+            <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mcts_node.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="32" column="25" selection-start="1110" selection-end="1110" vertical-scroll-proportion="0.25" vertical-offset="330" max-vertical-offset="1155">
+          <folding>
+            <element signature="e#0#21#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
