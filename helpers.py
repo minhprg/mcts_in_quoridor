@@ -95,7 +95,7 @@ def get_wall_moves(board, player):
 def get_all_actions(board, player):
     return board.get_actions(player)
 
-# get moves based on astars
+# get moves based on astars for node expansion selection
 def get_astar_moves(board, player):
     moves = []
 
@@ -107,9 +107,6 @@ def get_astar_moves(board, player):
     mypath = a_star(board, player)
     opponent_paths = a_star(board, opponent)
 
-    #print("Opponent paths:", opponent_paths)
-    #print("My path:", mypath)
-
     # add my move
     if mypath is not None:
         # add the first move
@@ -118,7 +115,7 @@ def get_astar_moves(board, player):
     # add wall to opponent path
     if opponent_paths is not None:
         # if there are still walls
-        if board.nb_walls[opponent] > 0:
+        if board.nb_walls[player] > 0:
             # list of wall moves
             positions = [
                             (0, 0), (1, 0), (-1, 0), (0, 1), (0, -1),
@@ -142,6 +139,7 @@ def get_astar_moves(board, player):
     print("Branching factor: ", len(moves))
 
     return moves
+
 
 # get moves from advanced player
 def get_advanced_moves(board, player):

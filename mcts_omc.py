@@ -74,7 +74,7 @@ def start(state, step, time_left):
     if (step <= 15):
         itermax = 100
     else:
-        itermax = 200
+        itermax = 120
 
     print("START MCTS! Step:", step)
     start = clock()
