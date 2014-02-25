@@ -71,16 +71,16 @@ def MCTS(rootstate, itermax, step, time_left):
 
 def start(state, step, time_left):
     # step pre-process
-    if (step <= 10):
+    if (step <= 15):
         itermax = 100
     else:
-        itermax = 500
+        itermax = 200
 
     print("START MCTS! Step:", step)
     start = clock()
     move = MCTS(rootstate=state, itermax=itermax, step=step, time_left=time_left)
     board, player = state
-    print(aStar(board, (player + 1) % 2))
+    print(a_star(board, (player + 1) % 2))
 
     print("NEXT MOVE IS:")
     print(move)

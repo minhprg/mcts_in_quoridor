@@ -12,7 +12,7 @@ class MCTSNode:
         self.wins = 0
         self.visits = 0
         self.value = 0
-        self.untriedMoves = get_advanced_moves(self.board, self.player) # future child nodes
+        self.untriedMoves = get_astar_moves(self.board, self.player) # future child nodes
         # urgency value
         self.urgency = 0
         # fairness value

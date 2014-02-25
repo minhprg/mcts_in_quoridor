@@ -4,7 +4,7 @@ from quoridor import *
 '''
 This is referenced from Marco Guido
 '''
-def aStar(board, player, find_opponent=False):
+def a_star(board, player, find_opponent=False):
     def h(n):
         return n.state.man_dist()
 
@@ -94,6 +94,54 @@ def get_wall_moves(board, player):
 # all actions
 def get_all_actions(board, player):
     return board.get_actions(player)
+
+# get moves based on astars
+def get_astar_moves(board, player):
+    moves = []
+
+    opponent = (player + 1) % 2
+    opponent_position = board.pawns[opponent]
+    x = opponent_position[0]
+    y = opponent_position[1]
+
+    mypath = a_star(board, player)
+    opponent_paths = a_star(board, opponent)
+
+    #print("Opponent paths:", opponent_paths)
+    #print("My path:", mypath)
+
+    # add my move
+    if mypath is not None:
+        # add the first move
+        moves.append(('P', mypath[0][0], mypath[0][1]))
+
+    # add wall to opponent path
+    if opponent_paths is not None:
+        # if there are still walls
+        if board.nb_walls[opponent] > 0:
+            # list of wall moves
+            positions = [
+                            (0, 0), (1, 0), (-1, 0), (0, 1), (0, -1),
+                            (1, 1), (-1, -1), (1, -1), (-1, 1)
+                            #(x + 2, y), (x - 2, y), (x, y + 2), (x, y - 2)
+                        ]
+            # consider walls along the shortest path of the opponent
+            visited = []
+            for path in opponent_paths:
+                for pos in positions:
+                    _x = path[0] + pos[0]
+                    _y = path[1] + pos[1]
+                    if board.is_wall_possible_here((_x, _y), True) and (('WH', _x, _y) in visited) is False:
+                        moves.append(('WH', _x, _y))
+                        visited.append(('WH', _x, _y)) # trace
+                    if board.is_wall_possible_here((_x, _y), False) and (('WV', _x, _y) in visited) is False:
+                        moves.append(('WV', _x, _y))
+                        visited.append(('WV', _x, _y)) # trace
+
+    # branching factor
+    print("Branching factor: ", len(moves))
+
+    return moves
 
 # get moves from advanced player
 def get_advanced_moves(board, player):
