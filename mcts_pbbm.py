@@ -20,15 +20,15 @@ def MCTS(rootstate, itermax, step, time_left):
 
         # Selection
         while node.untriedMoves == [] and node.childNodes != []: # node is fully expanded and non-terminal
-            print("1. SELECTION")
-            node = node.OMC()
+            #print("1. SELECTION")
+            node = node.PBBM()
             #print("Move:", node.move)
             board = node.board
             player = node.player
 
         # Expansion
         if node.untriedMoves is not []: # if we can expand (i.e. state/node is non-terminal)
-            print("2. EXPANSION")
+            #print("2. EXPANSION")
             m = random.choice(node.untriedMoves)
             state = (node.board.clone().play_action(m, node.player), (node.player+1)%2)
             node = node.AddChild(m, state, step, time_left) # add child and descend tree
@@ -38,23 +38,22 @@ def MCTS(rootstate, itermax, step, time_left):
         # Rollout - Simulation
         rollplayer = copy.deepcopy(player)
         rollboard = copy.deepcopy(board)
-        rollmove = get_advanced_moves(rollboard, rollplayer)
+        rollmove = node.move
         keepalive = 0
-        print("3. ROLLOUT - SIMULATION...", rollplayer)
-        while rollboard.is_finished() is False and len(rollmove) > 0: # while state is non-terminal
-            rollboard.play_action(random.choice(rollmove), rollplayer)
+        #print("3. ROLLOUT - SIMULATION...", rollplayer)
+        while rollboard.is_finished() is False and rollboard.get_legal_pawn_moves(rollplayer) is not []: # while state is non-terminal
+            rollmove = random.choice(rollboard.get_legal_pawn_moves(rollplayer))
+            rollboard.play_action(rollmove, rollplayer)
             rollplayer = (rollplayer + 1) % 2
-            rollmove = get_advanced_moves(rollboard, rollplayer)
             # keepalive
             keepalive +=1
             #print("Still running...", keepalive)
 
         # Backpropagate
         while node != None: # backpropagate from the expanded node and work back to the root node
-            print("4. BACKPROPAGATE for:", rootplayer)
+            #print("4. BACKPROPAGATE for:", rootplayer)
             if rollboard.is_playerwin(rootplayer) is True:
-                node.Update(1)
-
+                node.Update(1) # state is terminal. Update node with result from POV of node.playerJustMoved
             if rollboard.is_playerwin((rootplayer+1)%2) is True:
                 node.Update(-1)
             node = node.parentNode
@@ -75,7 +74,7 @@ def start(state, step, time_left):
     if (step <= 15):
         itermax = 100
     else:
-        itermax = 100
+        itermax = 120
 
     print("START MCTS! Step:", step)
     start = clock()
