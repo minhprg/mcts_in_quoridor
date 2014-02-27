@@ -135,9 +135,15 @@ def get_astar_moves(board, player):
 
                 # consider wall moves
                 if cloneboard.is_wall_possible_here((_x, _y), True) and (('WH', _x, _y) in visited) is False:
+                    #h_board = cloneboard.clone().play_action(('WH', _x, _y), player)
+                    # if the wall move gives better advantage
+                    #if len(a_star(h_board, player)) <= len(a_star(h_board, opponent)):
                     moves.append(('WH', _x, _y))
                     visited.append(('WH', _x, _y)) # trace
                 if cloneboard.is_wall_possible_here((_x, _y), False) and (('WV', _x, _y) in visited) is False:
+                    #v_board = cloneboard.clone().play_action(('WV', _x, _y), player)
+                    # if the wall move gives better advantage
+                    #if len(a_star(v_board,player)) <= len(a_star(v_board, opponent)):
                     moves.append(('WV', _x, _y))
                     visited.append(('WV', _x, _y)) # trace
 

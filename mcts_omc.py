@@ -73,9 +73,9 @@ def MCTS(rootstate, itermax, step, time_left):
 def start(state, step, time_left):
     # step pre-process
     if (step <= 15):
-        itermax = 100
+        itermax = 30
     else:
-        itermax = 100
+        itermax = 30
 
     print("START MCTS! Step:", step)
     start = clock()
