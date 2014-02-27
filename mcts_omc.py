@@ -38,13 +38,13 @@ def MCTS(rootstate, itermax, step, time_left):
         # Rollout - Simulation
         rollplayer = copy.deepcopy(player)
         rollboard = copy.deepcopy(board)
-        rollmove = get_advanced_moves(rollboard, rollplayer)
+        rollmove = get_astar_moves(rollboard, rollplayer)
         keepalive = 0
         print("3. ROLLOUT - SIMULATION...", rollplayer)
         while rollboard.is_finished() is False and len(rollmove) > 0: # while state is non-terminal
             rollboard.play_action(random.choice(rollmove), rollplayer)
             rollplayer = (rollplayer + 1) % 2
-            rollmove = get_advanced_moves(rollboard, rollplayer)
+            rollmove = get_astar_moves(rollboard, rollplayer)
             # keepalive
             keepalive +=1
             #print("Still running...", keepalive)

@@ -125,18 +125,21 @@ def get_astar_moves(board, player):
                         ]
             # consider walls along the shortest path of the opponent
             visited = []
-            for path in opponent_paths:
-                for pos in positions:
-                    _x = path[0] + pos[0]
-                    _y = path[1] + pos[1]
 
-                    # consider wall moves
-                    if cloneboard.is_wall_possible_here((_x, _y), True) and (('WH', _x, _y) in visited) is False:
-                        moves.append(('WH', _x, _y))
-                        visited.append(('WH', _x, _y)) # trace
-                    if cloneboard.is_wall_possible_here((_x, _y), False) and (('WV', _x, _y) in visited) is False:
-                        moves.append(('WV', _x, _y))
-                        visited.append(('WV', _x, _y)) # trace
+            # reduce branching factor by ONLY consider wall moves around the first step of shortest path
+            #for path in opponent_paths:
+            path = opponent_paths[0]
+            for pos in positions:
+                _x = path[0] + pos[0]
+                _y = path[1] + pos[1]
+
+                # consider wall moves
+                if cloneboard.is_wall_possible_here((_x, _y), True) and (('WH', _x, _y) in visited) is False:
+                    moves.append(('WH', _x, _y))
+                    visited.append(('WH', _x, _y)) # trace
+                if cloneboard.is_wall_possible_here((_x, _y), False) and (('WV', _x, _y) in visited) is False:
+                    moves.append(('WV', _x, _y))
+                    visited.append(('WV', _x, _y)) # trace
 
     # branching factor
     #print(moves)
