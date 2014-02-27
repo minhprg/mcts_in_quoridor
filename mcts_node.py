@@ -44,18 +44,20 @@ class MCTSNode:
 
         # calculate the urgency
         for child in self.childNodes:
-            p_i = 1 / child.visits
-            # expectation
-            expectation = p_i * (2 * child.wins - child.visits)
+            # check if visit > 0
+            if child.visits > 0:
+                p_i = 1 / child.visits
+                # expectation
+                expectation = p_i * (2 * child.wins - child.visits)
 
-            # standard deviation
-            sigma = sqrt( (pow(1 - expectation, 2) + pow(1 + expectation, 2)) * p_i )
-            print("visits:", child.visits, " - wins: ", child.wins, " - E(X): ", expectation, " - sigma: ", sigma)
-            # Urgency function update to child node
-            child.urgency = erfc( (v_0 - child.value) / (sqrt(2) * sigma) )
+                # standard deviation
+                sigma = sqrt( (pow(1 - expectation, 2) + pow(1 + expectation, 2)) * p_i )
+                print("visits:", child.visits, " - wins: ", child.wins, " - E(X): ", expectation, " - sigma: ", sigma)
+                # Urgency function update to child node
+                child.urgency = erfc( (v_0 - child.value) / (sqrt(2) * sigma) )
 
-            # update total urgency
-            total_urgency += child.urgency
+                # update total urgency
+                total_urgency += child.urgency
 
         print("total urgency: ", total_urgency)
 

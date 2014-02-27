@@ -53,19 +53,17 @@ def MCTS(rootstate, itermax, step, time_left):
         while node != None: # backpropagate from the expanded node and work back to the root node
             print("4. BACKPROPAGATE for:", rootplayer)
             if rollboard.is_playerwin(rootplayer) is True:
-                node.Update(1)
+                node.Update(1 / keepalive)
 
             if rollboard.is_playerwin((rootplayer+1)%2) is True:
-                node.Update(-1)
+                node.Update(-1 / keepalive)
             node = node.parentNode
 
     # test
-    '''
     print("Results:")
     for item in rootnode.childNodes:
         print("Node action:", item.move)
         print("Node score:", item.visits, item.wins)
-    '''
 
     return sorted(rootnode.childNodes, key = lambda c: c.visits)[-1].move # return the move that was most visited
 
@@ -73,9 +71,9 @@ def MCTS(rootstate, itermax, step, time_left):
 def start(state, step, time_left):
     # step pre-process
     if (step <= 15):
-        itermax = 30
+        itermax = 200
     else:
-        itermax = 30
+        itermax = 200
 
     print("START MCTS! Step:", step)
     start = clock()

@@ -3,7 +3,10 @@
   <component name="ChangeListManager">
     <list default="true" id="6ecc2b85-eda4-4e8c-9358-18df2652d401" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/helpers.py" afterPath="$PROJECT_DIR$/helpers.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mcts_node.py" afterPath="$PROJECT_DIR$/mcts_node.py" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mcts_omc.py" afterPath="$PROJECT_DIR$/mcts_omc.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/mcts_uct.py" afterPath="$PROJECT_DIR$/mcts_uct.py" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <ignored path="mcts_in_quoridor.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -29,16 +32,16 @@
       <file leaf-file-name="mcts_node.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mcts_node.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="44" column="31" selection-start="1290" selection-end="1290" vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="1980">
+            <state line="71" column="19" selection-start="2318" selection-end="2318" vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="2010">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mcts_omc.py" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="mcts_omc.py" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/mcts_omc.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="78" column="0" selection-start="2652" selection-end="2652" vertical-scroll-proportion="0.0" vertical-offset="780" max-vertical-offset="1380">
+            <state line="58" column="42" selection-start="2210" selection-end="2210" vertical-scroll-proportion="0.275" vertical-offset="660" max-vertical-offset="1350">
               <folding />
             </state>
           </provider>
@@ -47,16 +50,16 @@
       <file leaf-file-name="mcts_uct.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/mcts_uct.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="50" column="61" selection-start="1797" selection-end="1797" vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="1365">
+            <state line="57" column="12" selection-start="2031" selection-end="2031" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="1335">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="helpers.py" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="helpers.py" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/helpers.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="132" column="37" selection-start="4113" selection-end="4113" vertical-scroll-proportion="0.48892674" vertical-offset="1678" max-vertical-offset="3765">
+            <state line="174" column="0" selection-start="5739" selection-end="5739" vertical-scroll-proportion="0.0" vertical-offset="2098" max-vertical-offset="3765">
               <folding />
             </state>
           </provider>
@@ -118,11 +121,11 @@
         <option value="$PROJECT_DIR$/player_uct.py" />
         <option value="$PROJECT_DIR$/mcts_pbbm.py" />
         <option value="$PROJECT_DIR$/player_pbbm.py" />
-        <option value="$PROJECT_DIR$/mcts_node.py" />
         <option value="$PROJECT_DIR$/tmp.py" />
+        <option value="$PROJECT_DIR$/mcts_node.py" />
+        <option value="$PROJECT_DIR$/helpers.py" />
         <option value="$PROJECT_DIR$/mcts_uct.py" />
         <option value="$PROJECT_DIR$/mcts_omc.py" />
-        <option value="$PROJECT_DIR$/helpers.py" />
       </list>
     </option>
   </component>
@@ -720,30 +723,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/mcts_node.py">
+    <entry file="file://$PROJECT_DIR$/helpers.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="44" column="31" selection-start="1290" selection-end="1290" vertical-scroll-proportion="0.0" vertical-offset="765" max-vertical-offset="1980">
+        <state line="174" column="0" selection-start="5739" selection-end="5739" vertical-scroll-proportion="0.0" vertical-offset="1753" max-vertical-offset="3765">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mcts_uct.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="50" column="61" selection-start="1797" selection-end="1797" vertical-scroll-proportion="0.0" vertical-offset="345" max-vertical-offset="1365">
+        <state line="57" column="12" selection-start="2031" selection-end="2031" vertical-scroll-proportion="0.0" vertical-offset="390" max-vertical-offset="1335">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/mcts_node.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="71" column="19" selection-start="2318" selection-end="2318" vertical-scroll-proportion="0.0" vertical-offset="360" max-vertical-offset="2010">
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/mcts_omc.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="78" column="0" selection-start="2652" selection-end="2652" vertical-scroll-proportion="0.0" vertical-offset="780" max-vertical-offset="1380">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/helpers.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="132" column="37" selection-start="4113" selection-end="4113" vertical-scroll-proportion="0.48892674" vertical-offset="1678" max-vertical-offset="3765">
+        <state line="58" column="42" selection-start="2210" selection-end="2210" vertical-scroll-proportion="0.275" vertical-offset="660" max-vertical-offset="1350">
           <folding />
         </state>
       </provider>
