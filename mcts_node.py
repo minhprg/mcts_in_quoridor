@@ -25,6 +25,10 @@ class MCTSNode:
     Upper Confidence Bound for Trees by Kocsis - 2006
     '''
     def UCT(self):
+        for node in self.childNodes:
+            if node.visits is 0:
+                self.childNodes.remove(node)
+                
         s = sorted(self.childNodes, key = lambda c: c.wins/c.visits + sqrt(2*log(self.visits)/c.visits))[-1]
         return s
 
