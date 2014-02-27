@@ -111,6 +111,8 @@ def get_astar_moves(board, player):
     if len(mypath) > 0:
         # add the first move
         moves.append(('P', mypath[0][0], mypath[0][1]))
+    else:
+        moves = cloneboard.get_legal_pawn_moves(player)
 
     # add wall to opponent path
     if len(opponent_paths) > 0:
