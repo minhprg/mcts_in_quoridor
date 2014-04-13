@@ -9,6 +9,7 @@ class Quoridor extends Board {
   val size:Int = 9
   val rows:Int = size
   val cols: Int = size
+  var playerJustMoved:Int = -1
   
   // Quoridor specific values
   val startingWalls:Int = 10
@@ -39,7 +40,7 @@ class Quoridor extends Board {
   }
   
   def canMoveHere(i:Int, j:Int, player:Int):Boolean = {
-    true
+    this.isPawnMoveOk(this.pawns(player), (i,j), this.pawns((player + 1) % 2))
   }
   
   def isSimplifiedPawnMoveOk(formerPos:(Int, Int), newPos:(Int, Int)):Boolean = {
@@ -87,7 +88,7 @@ class Quoridor extends Board {
     if (rowNew == rowForm && colNew == colForm - 1)
       return !wallLeft
       
-    false
+    return false
   }
   
   def isPawnMoveOk(
@@ -115,7 +116,7 @@ class Quoridor extends Board {
         return false
         
       if ( (pow(abs(xForm - xNew), 2) + pow(abs(yForm - yNew), 2)) == 2 )
-        !this.isPawnMoveOk(opponentPos, (xOp + (xOp - xForm), yOp + (yOp - yForm)), (-10, -10))
+        return !this.isPawnMoveOk(opponentPos, (xOp + (xOp - xForm), yOp + (yOp - yForm)), (-10, -10))
       
       return true
     }
@@ -151,13 +152,16 @@ class Quoridor extends Board {
                 (x + 2, y), (x - 2, y), (x, y + 2), (x, y - 2))
         val moves:ArrayBuffer[(Int, Int)] = ArrayBuffer[(Int, Int)]()
         
-        positions.foreach(newPos => {if (this.isPawnMoveOk(pos, newPos, this.pawns((player + 1) % 2))) moves += newPos})
+        positions.foreach(newPos => {
+          if (this.isPawnMoveOk(pos, newPos, this.pawns((player + 1) % 2))) 
+            moves += newPos
+          })
         moves
     }
     
     val (a:Int, b:Int) = this.pawns(player)
     if (a == this.goals(player))
-      ArrayBuffer[(Int, Int)]()
+      return ArrayBuffer[(Int, Int)]()
     
     // visited positions
     var visited:Array[Array[Boolean]] = Array.fill[Boolean](this.size,this.size) { false }
@@ -181,11 +185,13 @@ class Quoridor extends Board {
           curr = prede(x1)(y1)
         }
         succ.reverse
-        succ
+        return succ
       }
       
       var unvisited_succ:ArrayBuffer[(Int, Int)] = ArrayBuffer[(Int, Int)]()
-      getPawnMoves(neighbor).foreach(item => {if (!visited(item._1)(item._2)) unvisited_succ += item})
+      getPawnMoves(neighbor).foreach(item => {
+        if (!visited(item._1)(item._2)) unvisited_succ += item
+        })
       
       unvisited_succ.foreach(n => {
         val (x1:Int, y1:Int) = n
@@ -196,7 +202,7 @@ class Quoridor extends Board {
       })
     }
     // No Path here!
-    ArrayBuffer[(Int, Int)]()
+    return ArrayBuffer[(Int, Int)]()
   }
   
   /**
@@ -245,8 +251,7 @@ class Quoridor extends Board {
       
     val tmp1:Boolean = if (this.horizWalls.find(_ == pos) != None) true else false
     val tmp2:Boolean = if (this.vertiWalls.find(_ == pos) != None) true else false
-    if (!( (if (this.horizWalls.find(_ == pos) != None) true else false) || 
-        (if (this.vertiWalls.find(_ == pos) != None) true else false) )) {
+    if (!( tmp1 || tmp2 )) {
       val wallHorizRight:Boolean = if (this.horizWalls.find(_ == (x, y + 1)) != None) true else false
       val wallHorizLeft:Boolean = if (this.horizWalls.find(_ == (x, y - 1)) != None) true else false
       val wallVertUp:Boolean = if (this.vertiWalls.find(_ == (x - 1, y)) != None) true else false
@@ -298,6 +303,20 @@ class Quoridor extends Board {
     moves
   }
   
+  def getLegalMovesFromPoint(pos:(Int, Int), player:Int):ArrayBuffer[(Int, Int)] = {
+    val (x:Int, y:Int) = pos
+    val positions:Array[(Int, Int)] = Array((x + 1, y), (x - 1, y), (x, y + 1), (x, y - 1),
+        (x + 1, y + 1), (x - 1, y - 1), (x + 1, y - 1), (x - 1, y + 1),
+        (x + 2, y), (x - 2, y), (x, y + 2), (x, y - 2))
+    val moves:ArrayBuffer[(Int, Int)] = ArrayBuffer[(Int, Int)]()
+    positions.foreach(newPos => {
+      if (this.isPawnMoveOk(pos, newPos, this.pawns((player + 1) % 2)))
+        moves.append((newPos._1, newPos._2))
+    })
+    
+    moves
+  }
+  
   /**
    * Returns legal wall placements (adding a wall
         somewhere) for player.
@@ -307,7 +326,7 @@ class Quoridor extends Board {
     val moves: ArrayBuffer[(String, Int, Int)] = ArrayBuffer[(String, Int, Int)]()
     
     if (this.nbWalls(player) <= 0)
-      moves
+      return moves
     for (i <- 0 until (this.size - 1))
       for (j <- 0 until (this.size - 1))
         positions.append((i, j))
@@ -418,7 +437,7 @@ class Quoridor extends Board {
       for (j <- 0 until this.size) {
         if (this.pawns(0)._1 == i && this.pawns(0)._2 == j)
           boardStr += "P1"
-        else if (this.pawns(1)._1 == i && this.pawns(0)._2 == j)
+        else if (this.pawns(1)._1 == i && this.pawns(1)._2 == j)
           boardStr += "P2"
         else
           boardStr += "00"
@@ -437,10 +456,10 @@ class Quoridor extends Board {
           boardStr += "---"
         }
         else if (this.horizWalls.find(_ == (i, j - 1)) != None) {
-          boardStr 
+          boardStr += "-- "
         }
         else if (this.vertiWalls.find(_ == (i, j)) != None) {
-          boardStr += " |"
+          boardStr += "  |"
         }
         else if (this.horizWalls.find(_ == (i, j - 1)) != None && this.vertiWalls.find(_ == (i,j)) != None)
           boardStr += "--|"
