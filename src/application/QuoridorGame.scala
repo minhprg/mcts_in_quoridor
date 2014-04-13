@@ -8,23 +8,10 @@ object QuoridorGame {
 	/**
 	 * Get arguments to decide agents
 	 */
-	def selectAgent1(agent:String):Agent = agent1 match {
-      case "UCT" => new UCTPlayer()
-      case "PBBM" => new PBBMPlayer()
-      case "UCB1TUNED" => new UCB1TUNNEDPlayer()
-      case _ => new OMCPlayer()
-    }
-    
-    def selectAgent2(agent:String):Agent = agent2 match {
-      case "UCT" => new UCTPlayer()
-      case "PBBM" => new PBBMPlayer()
-      case "UCB1TUNED" => new UCB1TUNNEDPlayer()
-      case _ => new OMCPlayer()
-    }
     
     // 2 players
-    var player1 = selectAgent1(agent1)
-    var player2 = selectAgent2(agent2)
+    var player1 = new Player(agent1)
+    var player2 = new Player(agent1)
     
     //create a game board
 	var board = new Quoridor()

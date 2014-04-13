@@ -6,16 +6,16 @@ import games.nodes.QuoridorNode
 import java.util.Random
 import scala.collection.mutable.ArrayBuffer
 import scala.math._
-import games.utils.QuoridorUtils
+import games.utils._
 
-class OMC(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
+class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
   val rootState:(Quoridor, Int) = state
   val itermax:Int = iterations
   val steps:Int = s
   val timeLeft:Int = t
   
   
-  def run():(String, Int, Int) = {
+  def run(ptype:String):(String, Int, Int) = {
 	  var rootNode:QuoridorNode = new QuoridorNode(state = this.rootState)
 	  val (rootBoard:Quoridor, rootPlayer:Int) = this.rootState
 	  
@@ -31,7 +31,18 @@ class OMC(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	    
 	    // Selection 
 	    while (node.untriedMoves.length == 0 && node.childNodes.length > 0) {
-	      node = node.OMC()
+	      // choosing different algorithm
+	      if (ptype == AlgorithmNames.OMC)
+	        node = node.OMC()
+	      else if (ptype == AlgorithmNames.UCT)
+	        node = node.UCT()
+	      else if (ptype == AlgorithmNames.PBBM)
+	        node = node.PBBM()
+	      else if (ptype == AlgorithmNames.UCB1TUNED)
+	        node = node.UCB1TUNED()
+	      else
+	        node = node.OMC()
+	        
 	      board = node.board
 	      player = node.player
 	    }
@@ -112,9 +123,9 @@ class OMC(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
   }
   
   
-  def start():(String, Int, Int) = {
+  def start(ptype:String):(String, Int, Int) = {
     println("Start mcts step: " + this.steps)
-    val move:(String, Int, Int) = this.run()
+    val move:(String, Int, Int) = this.run(ptype)
     move
   }
 }
