@@ -69,9 +69,15 @@ class OMC(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	      val rand = new Random(System.currentTimeMillis())
 	      var random_index = rand.nextInt(rollmove.length)
 	      
-	      rollboard = rollboard.playAction(rollmove(random_index), rollplayer)
+	      //println("-----: " + rollplayer)
+	      //println(rollmove(random_index))
+	      
+	      rollboard = rollboard.playAction(rollmove(random_index), rollplayer)	        	        	        
 	      rollplayer = (rollplayer + 1) % 2
 	      rollmove = QuoridorUtils.get_moves(rollboard, rollplayer)
+	      
+	      //println(rollboard)
+	      //println(rollmove)
 	      
 	      // keep alive printing
 	      print(".")

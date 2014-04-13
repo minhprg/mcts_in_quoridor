@@ -22,7 +22,7 @@ class Quoridor extends Board {
   
   // Common methods for every board
   def cloneBoard():Quoridor = {
-    var cloner:Quoridor = new Quoridor
+    var cloner:Quoridor = new Quoridor()
     cloner.pawns(0) = this.pawns(0)
     cloner.pawns(1) = this.pawns(1)
     cloner.goals(0) = this.goals(0)
@@ -202,7 +202,7 @@ class Quoridor extends Board {
       })
     }
     // No Path here!
-    return ArrayBuffer[(Int, Int)]()
+    throw new Exception("No Path")
   }
   
   /**

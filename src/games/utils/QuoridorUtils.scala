@@ -10,7 +10,8 @@ object QuoridorUtils {
 	  //board.getActions(player)
 	  //board.getLegalPawnMoves(player)
 	  //getDijkstraMoves(board, player)
-	  getBFSMoves(board, player)	  
+	  getBFSMoves(board, player)
+	  //board.getLegalWallMoves(player)
 	}
 	
 	def getBFSMoves(board:Quoridor, player:Int):ArrayBuffer[(String, Int, Int)] = {
@@ -37,34 +38,39 @@ object QuoridorUtils {
 	    )
 	    // with each position, check if it exists in the list, if not then add it to list
 	    if (board.nbWalls(player) > 0) {
-	    	for (item <- positions) {	      
+	    	for (item <- positions) {	  	    	  
 		      // if still inside the ground
 		      if (item._1 >= 0 && item._1 < board.size - 1 && item._2 >= 0 && item._2 < board.size - 1) {
 		    	  // horizon
 			      if (!moves.exists(_ == (("WH", item._1, item._2)))) {
-			        if (board.isWallPossibleHere((item._1, item._2), true))
-			          if (board.cloneBoard.playAction(("WH", item._1, item._2), player).getShortestPath(player).length > 0 &&
-			              board.cloneBoard.playAction(("WH", item._1, item._2), player).getShortestPath((player + 1) % 2).length > 0
-			              )
-			        	moves.append(("WH", item._1, item._2))
+			        var tmp = board.cloneBoard
+			        if (board.isWallPossibleHere((item._1, item._2), true))			          
+			          //if (tmp.playAction(("WH", item._1, item._2), player).pathExists)
+			            moves.append(("WH", item._1, item._2))
 			      }
 			      
 			      // vertical
 			      if (!moves.exists(_ == (("WV", item._1, item._2)))) {
+			        //var tmp = board.cloneBoard
 			        if (board.isWallPossibleHere((item._1, item._2), false))
-			          if (board.cloneBoard.playAction(("WV", item._1, item._2), player).getShortestPath(player).length > 0 &&
-			              board.cloneBoard.playAction(("WV", item._1, item._2), player).getShortestPath((player + 1) % 2).length > 0
-			              )
-			        	moves.append(("WV", item._1, item._2))
+			        	//if (tmp.playAction(("WV", item._1, item._2), player).pathExists)
+			        	  moves.append(("WV", item._1, item._2))
 			      }
 		      }
 		    }
 	    }
 	  }
 	  
-	  for (item <- board.getLegalPawnMoves(player))
-	    if (way(1)._1 == item._2 && way(1)._2 == item._3)
-	      moves.append(("P", item._2, item._3))
+	  // if the pawn move on the shortest path is legal, then add it
+	  if (way.length > 0) {
+	    for (item <- board.getLegalPawnMoves(player))
+	      if (way(1)._1 == item._2 && way(1)._2 == item._3)
+	        moves.append(("P", item._2, item._3))
+	  }
+	  else {
+	    // else, add the legal pawn moves
+	    board.getLegalPawnMoves(player).foreach(item => { moves += item })
+	  }
 	  
 	  moves
 	}
