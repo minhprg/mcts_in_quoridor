@@ -24,7 +24,7 @@ object QuoridorGame {
 	// steps
 	var steps:Int = 0
   
-	val itermax:Int = 70
+	val itermax:Int = 200
 	  
 	// initial board
 	println(board.toString)
@@ -32,6 +32,7 @@ object QuoridorGame {
 	while (!board.isFinished) {   
 	  var move:(String, Int, Int) = ("", 0, 0)
 	  var playerJustMoved = -1
+	  val now = System.nanoTime // timer
 	  // first move for player1 - this can be dynamically chosen in future!
 	  if (board.playerJustMoved == -1) {
 	    move = player1.playQuoridor(players.PLAYER1, itermax, board, steps + 1, 0)
@@ -52,7 +53,10 @@ object QuoridorGame {
 	  }
 	  // update board
 	  steps += 1
-	  board.playerJustMoved = playerJustMoved    
+	  board.playerJustMoved = playerJustMoved
+	  // time alert
+	  val micros = (System.nanoTime - now)
+	  println("Time taken: " + micros + " seconds.")
 	  // print board
 	  println(board.toString)
 	}

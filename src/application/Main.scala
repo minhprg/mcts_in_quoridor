@@ -7,7 +7,7 @@ object Main extends App {
   override def main(args:Array[String]) = {
     // constructor right here
     println("Welcome to mcts games")
-    QuoridorGame.run("omc", "omc")
+    QuoridorGame.run("uct", "omc")
     /*
     // receive arguments
     // 1. game {quoridor}
