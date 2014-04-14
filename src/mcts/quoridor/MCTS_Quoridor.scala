@@ -79,17 +79,17 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	    
 	    // Start simulations!
 	    //println("3. Simulation")
-	    var keepAlive:Int = 1
 	    while (rollboard.isFinished == false && rollmove.length > 0) {	
 	      val rand = new Random(System.currentTimeMillis())
 	      var random_index = rand.nextInt(rollmove.length)
 	      
-	      //println("-----: " + rollplayer)
-	      //println(rollmove(random_index))
-	      try {
 	      rollboard = rollboard.playAction(rollmove(random_index), rollplayer)	        	        	        
 	      rollplayer = (rollplayer + 1) % 2
 	      rollmove = QuoridorUtils.get_moves(rollboard, rollplayer)
+	      
+	      /*
+	      try {
+	      
 	      }
 	      catch {
 	        case _ => {
@@ -100,14 +100,9 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	          println("Random Index:" + random_index)
 	        }
 	      }
-	      //println(rollboard)
-	      //println(rollmove)
-	      
-	      // keep alive printing
-	      //print(".")
-	      //keepAlive += 1
+	      *      
+	      */      
 	    }	    
-	    //println("Finished simulations!")
 	    
 	    // Back propagation
 	    while (node != null) {
