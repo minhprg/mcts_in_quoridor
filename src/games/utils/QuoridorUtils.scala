@@ -37,15 +37,12 @@ object QuoridorUtils {
 	  }
 	  myway = myway.reverse
 	  
-	  //println("My path:" + myway)
-	  //println("Opp path:" + way)
-	  
 	  var moves: ArrayBuffer[(String, Int, Int)] = new ArrayBuffer[(String, Int, Int)]()
 	  
 	  // if we are both at first half
 	  if (myway.length - 1 >= board.size + 1 && way.length - 1 >= board.size + 1) {	    
 	    // if the move makes the advantages then only move the pawn
-	    if (myway.length - 2 <= way.length - 1) {
+	    if (myway.length - 1 <= way.length - 1) {
 	      moves.append(("P", myway(1)._1, myway(1)._2))
 	    }
 	    else { // we need to consider the wall moves around the path area
@@ -67,7 +64,6 @@ object QuoridorUtils {
 	    board.getActions(player).foreach(item => { moves += item })
 	    *
 	    */
-
 	  moves
 	}
 	
@@ -85,7 +81,9 @@ object QuoridorUtils {
 	    val positions:Array[(Int, Int)] = Array(
 	    		(x - 2, y - 1), (x - 2, y),
 	    		(x - 1, y - 2), (x - 1, y - 1), (x - 1, y), (x - 1, y + 1),
+	    		(x - 1, y), (x - 1, y + 1),
 	    		(x, y - 2), (x, y - 1), (x, y), (x, y + 1),
+	    		(x, y), (x, y + 1),
 	    		(x + 1, y - 1), (x + 1, y)
 	    )
 	    // with each position, check if it exists in the list, if not then add it to list

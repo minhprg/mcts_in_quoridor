@@ -27,7 +27,7 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	    var (board:Quoridor, player:Int) = state
 	    
 	    //println("Iteration " + (counter + 1) + ". Branching:" + node.untriedMoves.length)
-	    print(".")
+	    print(counter + 1 + " ")
 	    counter += 1
 	    
 	    // Selection 
