@@ -1,8 +1,15 @@
 package application
 
 import algorithms._
+import games.utils._
 
 object Tester extends App {
+  // test file output
+  var log = new Logger("/Users/qmha/test.txt")
+  log.log("Hello World")
+  log.log("I lost")
+  log.save()
+  
 	val G = new Dijkstra
 	// Add vertex
 	G.addVertex(new Vertex((0, 1), 9999))

@@ -30,7 +30,7 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	    if (i % (itermax / 10) != 0)
 	    	print(".")
 	    else
-	      print((i / (itermax / 10)) + "0%")	      
+	      print((i / (itermax / 10)) + "0%")
 	    counter += 1
 	    
 	    // Selection 
