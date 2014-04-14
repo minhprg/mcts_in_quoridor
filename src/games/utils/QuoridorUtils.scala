@@ -6,13 +6,118 @@ import algorithms._
 import scala.math._
 
 object QuoridorUtils {
-	def get_moves(board:Quoridor, player:Int): ArrayBuffer[(String, Int, Int)] = {
+	def getchildNodes(board:Quoridor, player:Int): ArrayBuffer[(String, Int, Int)] = {
 	  //board.getActions(player)
 	  //board.getLegalPawnMoves(player)
 	  //getDijkstraMoves(board, player)
-	  getBFSMoves(board, player)
+	  getBFSMoves2(board, player)
 	  //board.getLegalWallMoves(player)
 	}
+	
+	def get_moves(board:Quoridor, player:Int): ArrayBuffer[(String, Int, Int)] = {
+	  getBFSMoves2(board, player)
+	}
+	
+	def getBFSMoves2(board:Quoridor, player:Int):ArrayBuffer[(String, Int, Int)] = {
+	  val opponent:Int = (player + 1) % 2
+	  var path = QuoridorUtils.doBFSMoves(board, opponent) // get path of opponents
+	  var mypath = QuoridorUtils.doBFSMoves(board, player) // my path
+	  var way:ArrayBuffer[(Int, Int)] = new ArrayBuffer[(Int, Int)]()
+	  var myway:ArrayBuffer[(Int, Int)] = new ArrayBuffer[(Int, Int)]()
+	  
+	  while (path != null) {
+	    way += ((path.id._1, path.id._2))
+	    path = path.previous
+	  }
+	  way = way.reverse
+	  
+	  while (mypath != null) {
+	    myway += ((mypath.id._1, mypath.id._2))
+	    mypath = mypath.previous
+	  }
+	  myway = myway.reverse
+	  
+	  //println("My path:" + myway)
+	  //println("Opp path:" + way)
+	  
+	  var moves: ArrayBuffer[(String, Int, Int)] = new ArrayBuffer[(String, Int, Int)]()
+	  
+	  // if we are both at first half
+	  if (myway.length - 1 >= board.size + 1 && way.length - 1 >= board.size + 1) {	    
+	    // if the move makes the advantages then only move the pawn
+	    if (myway.length - 2 <= way.length - 1) {
+	      moves.append(("P", myway(1)._1, myway(1)._2))
+	    }
+	    else { // we need to consider the wall moves around the path area
+	      considerWallMoves(way, board, player).foreach(item => {moves += item})
+	    }
+	  }
+	  else { // if we are at the middle to the end of the game
+	    if (myway.length > 1) {
+	      moves.append(("P", myway(1)._1, myway(1)._2))
+	    }
+	    considerWallMoves(way, board, player).foreach(item => {moves += item})
+	  }
+	  /*
+	  // if here still zero, legal pawn moves
+	  if (moves.length == 0)
+	    board.getLegalPawnMoves(player).foreach(item => {moves += item})
+	  // if no more moves -> get all actions that is possible
+	  if (moves.length == 0)
+	    board.getActions(player).foreach(item => { moves += item })
+	    *
+	    */
+
+	  moves
+	}
+	
+	def considerWallMoves(way:ArrayBuffer[(Int, Int)], board:Quoridor, player:Int):ArrayBuffer[(String, Int, Int)] = {
+	  var moves: ArrayBuffer[(String, Int, Int)] = new ArrayBuffer[(String, Int, Int)]()
+	  var limit:Int = way.length
+	  if (way.length > 3)
+	    limit = 3
+	    
+	  // along the path of opponent	  
+	  for (i <- 0 until limit) {
+	    val x:Int = way(i)._1
+	    val y:Int = way(i)._2
+	    // defines positions
+	    val positions:Array[(Int, Int)] = Array(
+	    		(x - 2, y - 1), (x - 2, y),
+	    		(x - 1, y - 2), (x - 1, y - 1), (x - 1, y), (x - 1, y + 1),
+	    		(x, y - 2), (x, y - 1), (x, y), (x, y + 1),
+	    		(x + 1, y - 1), (x + 1, y)
+	    )
+	    // with each position, check if it exists in the list, if not then add it to list
+	    if (board.nbWalls(player) > 0) {
+	    	for (item <- positions) {	  	    	  
+		      // if still inside the ground
+		      if (item._1 >= 0 && item._1 < board.size - 1 && item._2 >= 0 && item._2 < board.size - 1) {
+		    	  // horizon
+			      if (!moves.exists(_ == (("WH", item._1, item._2)))) {
+			        //var tmp = board.cloneBoard
+			        if (board.isWallPossibleHere((item._1, item._2), true))			          
+			          //if (tmp.playAction(("WH", item._1, item._2), player).pathExists)
+			            moves.append(("WH", item._1, item._2))
+			      }
+			      
+			      // vertical
+			      if (!moves.exists(_ == (("WV", item._1, item._2)))) {
+			        //var tmp = board.cloneBoard
+			        if (board.isWallPossibleHere((item._1, item._2), false))
+			        	//if (tmp.playAction(("WV", item._1, item._2), player).pathExists)
+			        	  moves.append(("WV", item._1, item._2))
+			      }
+		      }
+		    }
+	    }
+	  }
+	  moves
+	}
+	
+	
+	
+	
 	
 	def getBFSMoves(board:Quoridor, player:Int):ArrayBuffer[(String, Int, Int)] = {
 	  val opponent:Int = (player + 1) % 2

@@ -26,8 +26,8 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	    var state:(Quoridor, Int) = (rootBoard.cloneBoard, rootPlayer)
 	    var (board:Quoridor, player:Int) = state
 	    
-	    println("Iteration " + (counter + 1) + ". Branching:" + node.untriedMoves.length)
-	    
+	    //println("Iteration " + (counter + 1) + ". Branching:" + node.untriedMoves.length)
+	    print(".")
 	    counter += 1
 	    
 	    // Selection 
@@ -75,7 +75,7 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	    //println("Roll move is:" + rollmove)
 	    
 	    // Start simulations!
-	    println("3. Simulation")
+	    // println("3. Simulation")
 	    while (rollboard.isFinished == false && rollmove.length > 0) {	
 	      val rand = new Random(System.currentTimeMillis())
 	      var random_index = rand.nextInt(rollmove.length)
@@ -84,25 +84,9 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	      rollplayer = (rollplayer + 1) % 2
 	      rollmove = QuoridorUtils.get_moves(rollboard, rollplayer)
 	      
-	      println(rollboard)
-	      println("Next player:" + rollplayer + ". Iteration:" + counter + ". Step:" + steps)
-	      println("Moves = " + rollmove)
-	      
-	      /*
-	      try {
-	      
-	      }
-	      catch {
-	        case _ => {
-	          println("Error report:")
-	          println(rollboard)
-	          println("Player:" + rollplayer)
-	          println("Moves:" + rollmove)
-	          println("Random Index:" + random_index)
-	        }
-	      }
-	      *      
-	      */      
+	      //println(rollboard)
+	      //println("Next player:" + rollplayer + ". Iteration:" + counter + ". Step:" + steps)
+	      //println("Moves = " + rollmove)	      
 	    }	    
 	    
 	    // Back propagation
@@ -116,18 +100,19 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	    }
 	  }
 	  
-	  println("")
-	  
-	  // statistics	
+	  // statistics
+	  /*
 	  println("Results:" + rootNode.childNodes.length)	  
 	  rootNode.childNodes.foreach(item => {
 	    println("Node action: " + item.move)
 	    println("Node score: " + item.visits + ", " + item.wins)
 	  })
+	  * 
+	  */
 	  
 	  // Return the appropriate move
 	  val result:(String, Int, Int) = rootNode.childNodes.sortWith((n1,n2)=> (n1.visits) < (n2.visits)).takeRight(1)(0).move
-	  println("Final move of player " + rootNode.player + " is:" + result)
+	  println("\nFinal move of player " + rootNode.player + " is:" + result)
 	  result
   }
   

@@ -21,7 +21,7 @@ class QuoridorNode (
   val time_left:Int = t
   var childNodes: ArrayBuffer[QuoridorNode] = ArrayBuffer[QuoridorNode]()
   val parentNode = parent
-  var untriedMoves: ArrayBuffer[(String, Int, Int)] = QuoridorUtils.get_moves(this.board, this.player)
+  var untriedMoves: ArrayBuffer[(String, Int, Int)] = QuoridorUtils.getchildNodes(this.board, this.player)
   
   // Monte-Carlo tree search values
   var wins:Int = 0
