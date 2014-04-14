@@ -42,7 +42,7 @@ object QuoridorUtils {
 	  // if we are both at first half
 	  if (myway.length - 1 >= board.size + 1 && way.length - 1 >= board.size + 1) {	    
 	    // if the move makes the advantages then only move the pawn
-	    if (myway.length - 1 <= way.length - 1) {
+	    if (myway.length <= way.length) {
 	      moves.append(("P", myway(1)._1, myway(1)._2))
 	    }
 	    else { // we need to consider the wall moves around the path area
