@@ -15,17 +15,28 @@ object QuoridorUtils {
 	}
 	
 	def getBFSMoves(board:Quoridor, player:Int):ArrayBuffer[(String, Int, Int)] = {
-	  var path = QuoridorUtils.doBFSMoves(board, (player + 1) % 2) // get path of opponents
+	  val opponent:Int = (player + 1) % 2
+	  var path = QuoridorUtils.doBFSMoves(board, opponent) // get path of opponents
+	  var mypath = QuoridorUtils.doBFSMoves(board, player) // my path
 	  var way:ArrayBuffer[(Int, Int)] = new ArrayBuffer[(Int, Int)]()
+	  var myway:ArrayBuffer[(Int, Int)] = new ArrayBuffer[(Int, Int)]()
+	  
+	  
 	  while (path != null) {
 	    way += ((path.id._1, path.id._2))
 	    path = path.previous
 	  }
 	  way = way.reverse
 	  
+	  while (mypath != null) {
+	    myway += ((mypath.id._1, mypath.id._2))
+	    mypath = mypath.previous
+	  }
+	  myway = myway.reverse
+	  
 	  var moves: ArrayBuffer[(String, Int, Int)] = new ArrayBuffer[(String, Int, Int)]()
 	  
-	  // along the path
+	  // along the path of opponent
 	  for (i <- 0 until way.length) {
 	    val x:Int = way(i)._1
 	    val y:Int = way(i)._2
@@ -43,7 +54,7 @@ object QuoridorUtils {
 		      if (item._1 >= 0 && item._1 < board.size - 1 && item._2 >= 0 && item._2 < board.size - 1) {
 		    	  // horizon
 			      if (!moves.exists(_ == (("WH", item._1, item._2)))) {
-			        var tmp = board.cloneBoard
+			        //var tmp = board.cloneBoard
 			        if (board.isWallPossibleHere((item._1, item._2), true))			          
 			          //if (tmp.playAction(("WH", item._1, item._2), player).pathExists)
 			            moves.append(("WH", item._1, item._2))
@@ -62,9 +73,9 @@ object QuoridorUtils {
 	  }
 	  
 	  // if the pawn move on the shortest path is legal, then add it
-	  if (way.length > 0) {
+	  if (myway.length > 0) {
 	    for (item <- board.getLegalPawnMoves(player))
-	      if (way(1)._1 == item._2 && way(1)._2 == item._3)
+	      if (myway(1)._1 == item._2 && myway(1)._2 == item._3)
 	        moves.append(("P", item._2, item._3))
 	  }
 	  else {

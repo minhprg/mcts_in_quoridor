@@ -84,6 +84,10 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	      rollplayer = (rollplayer + 1) % 2
 	      rollmove = QuoridorUtils.get_moves(rollboard, rollplayer)
 	      
+	      println(rollboard)
+	      println("Next player:" + rollplayer + ". Iteration:" + counter + ". Step:" + steps)
+	      println("Moves = " + rollmove)
+	      
 	      /*
 	      try {
 	      
