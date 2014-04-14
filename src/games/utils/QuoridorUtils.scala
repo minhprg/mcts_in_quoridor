@@ -72,7 +72,12 @@ object QuoridorUtils {
 	    board.getLegalPawnMoves(player).foreach(item => { moves += item })
 	  }
 	  
-	  moves
+	  if (moves.length > 0)
+	    return moves
+	  else if (board.getLegalPawnMoves(player).length > 0)
+	    return board.getLegalPawnMoves(player)
+	  else
+	    return board.getActions(player)
 	}
 	
 	def doBFSMoves(board:Quoridor, player:Int):Vertex = {
