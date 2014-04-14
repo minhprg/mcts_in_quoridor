@@ -10,15 +10,15 @@ object QuoridorUtils {
 	  //board.getActions(player)
 	  //board.getLegalPawnMoves(player)
 	  //getDijkstraMoves(board, player)
-	  getBFSMoves2(board, player)
+	  getChildMoves(board, player)	  
 	  //board.getLegalWallMoves(player)
 	}
 	
 	def get_moves(board:Quoridor, player:Int): ArrayBuffer[(String, Int, Int)] = {
-	  getBFSMoves2(board, player)
+	  getSimulationMoves(board, player)
 	}
 	
-	def getBFSMoves2(board:Quoridor, player:Int):ArrayBuffer[(String, Int, Int)] = {
+	def getSimulationMoves(board:Quoridor, player:Int):ArrayBuffer[(String, Int, Int)] = {
 	  val opponent:Int = (player + 1) % 2
 	  var path = QuoridorUtils.doBFSMoves(board, opponent) // get path of opponents
 	  var mypath = QuoridorUtils.doBFSMoves(board, player) // my path
@@ -114,10 +114,7 @@ object QuoridorUtils {
 	}
 	
 	
-	
-	
-	
-	def getBFSMoves(board:Quoridor, player:Int):ArrayBuffer[(String, Int, Int)] = {
+	def getChildMoves(board:Quoridor, player:Int):ArrayBuffer[(String, Int, Int)] = {
 	  val opponent:Int = (player + 1) % 2
 	  var path = QuoridorUtils.doBFSMoves(board, opponent) // get path of opponents
 	  var mypath = QuoridorUtils.doBFSMoves(board, player) // my path
@@ -139,15 +136,25 @@ object QuoridorUtils {
 	  
 	  var moves: ArrayBuffer[(String, Int, Int)] = new ArrayBuffer[(String, Int, Int)]()
 	  
+	  // add my pawn
+	  if (myway.length > 1) {
+	    moves.append(("P", myway(1)._1, myway(1)._2))
+	  }
+	  
 	  // along the path of opponent
-	  for (i <- 0 until way.length) {
+	  var limit = way.length
+	  if (way.length > board.size / 2)
+	    limit = board.size / 2
+	  for (i <- 0 until limit) {
 	    val x:Int = way(i)._1
 	    val y:Int = way(i)._2
 	    // defines positions
 	    val positions:Array[(Int, Int)] = Array(
 	    		(x - 2, y - 1), (x - 2, y),
-	    		(x - 1, y - 2), (x - 1, y - 1), (x - 1, y), (x - 1, y + 1),
-	    		(x, y - 2), (x, y - 1), (x, y), (x, y + 1),
+	    		//(x - 1, y - 2), (x - 1, y - 1), (x - 1, y), (x - 1, y + 1),
+	    		(x - 1, y), (x - 1, y + 1),
+	    		//(x, y - 2), (x, y - 1), (x, y), (x, y + 1),
+	    		(x, y), (x, y + 1),
 	    		(x + 1, y - 1), (x + 1, y)
 	    )
 	    // with each position, check if it exists in the list, if not then add it to list
@@ -157,15 +164,12 @@ object QuoridorUtils {
 		      if (item._1 >= 0 && item._1 < board.size - 1 && item._2 >= 0 && item._2 < board.size - 1) {
 		    	  // horizon
 			      if (!moves.exists(_ == (("WH", item._1, item._2)))) {
-			        //var tmp = board.cloneBoard
 			        if (board.isWallPossibleHere((item._1, item._2), true))			          
-			          //if (tmp.playAction(("WH", item._1, item._2), player).pathExists)
 			            moves.append(("WH", item._1, item._2))
 			      }
 			      
 			      // vertical
 			      if (!moves.exists(_ == (("WV", item._1, item._2)))) {
-			        //var tmp = board.cloneBoard
 			        if (board.isWallPossibleHere((item._1, item._2), false))
 			        	//if (tmp.playAction(("WV", item._1, item._2), player).pathExists)
 			        	  moves.append(("WV", item._1, item._2))
@@ -175,23 +179,7 @@ object QuoridorUtils {
 	    }
 	  }
 	  
-	  // if the pawn move on the shortest path is legal, then add it
-	  if (myway.length > 0) {
-	    for (item <- board.getLegalPawnMoves(player))
-	      if (myway(1)._1 == item._2 && myway(1)._2 == item._3)
-	        moves.append(("P", item._2, item._3))
-	  }
-	  else {
-	    // else, add the legal pawn moves
-	    board.getLegalPawnMoves(player).foreach(item => { moves += item })
-	  }
-	  
-	  if (moves.length > 0)
-	    return moves
-	  else if (board.getLegalPawnMoves(player).length > 0)
-	    return board.getLegalPawnMoves(player)
-	  else
-	    return board.getActions(player)
+	  moves
 	}
 	
 	def doBFSMoves(board:Quoridor, player:Int):Vertex = {
