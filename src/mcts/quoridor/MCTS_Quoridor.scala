@@ -26,11 +26,8 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	    var state:(Quoridor, Int) = (rootBoard.cloneBoard, rootPlayer)
 	    var (board:Quoridor, player:Int) = state
 	    
-	    //println("Iteration " + (counter + 1) + ". Branching:" + node.untriedMoves.length)
-	    if (i % (itermax / 10) != 0)
-	    	print(".")
-	    else
-	      print((i / (itermax / 10)) + "0%")
+	    println("Iteration " + (counter + 1) + ". Branching:" + node.untriedMoves.length)
+	    
 	    counter += 1
 	    
 	    // Selection 
@@ -78,7 +75,7 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	    //println("Roll move is:" + rollmove)
 	    
 	    // Start simulations!
-	    //println("3. Simulation")
+	    println("3. Simulation")
 	    while (rollboard.isFinished == false && rollmove.length > 0) {	
 	      val rand = new Random(System.currentTimeMillis())
 	      var random_index = rand.nextInt(rollmove.length)

@@ -15,7 +15,7 @@ object QuoridorUtils {
 	}
 	
 	def getBFSMoves(board:Quoridor, player:Int):ArrayBuffer[(String, Int, Int)] = {
-	  var path = QuoridorUtils.doBFSMoves(board, player)
+	  var path = QuoridorUtils.doBFSMoves(board, (player + 1) % 2) // get path of opponents
 	  var way:ArrayBuffer[(Int, Int)] = new ArrayBuffer[(Int, Int)]()
 	  while (path != null) {
 	    way += ((path.id._1, path.id._2))
