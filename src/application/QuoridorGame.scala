@@ -5,7 +5,7 @@ import games.players._
 import games.utils._
 
 object QuoridorGame {
-  def run(agent1: String, agent2:String, prefix:String, iterations:Int) = {
+  def run(agent1: String, agent2:String, prefix:String, iteration1:Int, iteration2:Int) = {
 	/**
 	 * Get arguments to decide agents
 	 */
@@ -25,21 +25,23 @@ object QuoridorGame {
 	// steps
 	var steps:Int = 0
   
-	val itermax:Int = iterations
+	val itermax1:Int = iteration1
+	val itermax2:Int = iteration2
 	  
 	// initial board
 	println(board.toString)
     
     // initial loggers
     val filename:String = (System.currentTimeMillis / 1000).toString + "_" + // timestamp 
-    						itermax + "_" + agent1 + "_" + agent2 + ".txt"  // agents + iterations
+    						itermax1 + "_" + itermax2 + "_" + agent1 + "_" + agent2 + ".txt"  // agents + iterations
     var logger = new Logger(prefix + filename)
     
     // logs
     logger.log(players.PLAYER1.toString) // first player
     logger.log(agent1)
     logger.log(agent2)
-    logger.log(itermax.toString)    
+    logger.log(itermax1.toString)
+    logger.log(itermax2.toString)
 	  
 	while (!board.isFinished) {   
 	  var move:(String, Int, Int) = ("", 0, 0)
@@ -47,19 +49,19 @@ object QuoridorGame {
 	  val now = System.nanoTime // timer
 	  // first move for player1 - this can be dynamically chosen in future!
 	  if (board.playerJustMoved == -1) {
-	    move = player1.playQuoridor(players.PLAYER1, itermax, board, steps + 1, 0)
+	    move = player1.playQuoridor(players.PLAYER1, itermax1, board, steps + 1, 0)
 	    board.playAction(move, players.PLAYER1)
 	    playerJustMoved = players.PLAYER1
 	  }
 	  else if (board.playerJustMoved == 1) {
 	    // player1 turn
-	    move = player1.playQuoridor(players.PLAYER1, itermax, board, steps + 1, 0)
+	    move = player1.playQuoridor(players.PLAYER1, itermax1, board, steps + 1, 0)
 	    board.playAction(move, players.PLAYER1)
 	    playerJustMoved = players.PLAYER1
 	  }
 	  else {
 	    // player2 turn
-	    move = player2.playQuoridor(players.PLAYER2, itermax, board, steps + 1, 0)
+	    move = player2.playQuoridor(players.PLAYER2, itermax2, board, steps + 1, 0)
 	    board.playAction(move, players.PLAYER2)
 	    playerJustMoved = players.PLAYER2
 	  }
