@@ -26,7 +26,7 @@ class QuoridorNode (
   // Monte-Carlo tree search values
   var wins:Int = 0
   var visits:Int = 0
-  var value:Int = 0
+  var value:Double = 0
   var urgency:Double = 0
   var fairness:Double = 0
   
@@ -38,7 +38,31 @@ class QuoridorNode (
     n
   }
   
-  def updateChild(result:Int) {
+  /**
+   * Backpropagate strategies
+   */
+  def updateUCT(result:Int) {
+    if (result > 0)
+      this.wins += result
+    this.visits += 1
+    this.value += result
+  }
+  
+  def updateOMC(result:Int) {
+    if (result > 0)
+      this.wins += result
+    this.visits += 1
+    this.value += result
+  }
+  
+  def updatePBBM(result:Int) {
+    if (result > 0)
+      this.wins += result
+    this.visits += 1
+    this.value += result
+  }
+  
+  def updateUCB1Tuned(result:Int) {
     if (result > 0)
       this.wins += result
     this.visits += 1
@@ -69,7 +93,7 @@ class QuoridorNode (
   def OMC():QuoridorNode = {
     // best move value
 	val node0:QuoridorNode = this.childNodes.sortWith((n1, n2) => n1.value < n2.value).takeRight(1)(0)
-	val v_0:Int = node0.value
+	val v_0:Double = node0.value
 	
 	// n_p
 	val n_p = this.visits

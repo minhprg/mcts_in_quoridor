@@ -12,7 +12,7 @@ object QuoridorGame {
     
     // 2 players
     var player1 = new Player(agent1)
-    var player2 = new Player(agent1)
+    var player2 = new Player(agent2)
     
     //create a game board
 	var board = new Quoridor()
@@ -71,8 +71,11 @@ object QuoridorGame {
 	  // time alert
 	  val micros = (System.nanoTime - now) / 1000 / 1000000
 	  println("Time taken: " + micros + " seconds.")
+	  // print walls left of each player
+	  println("Walls left: P1 = " + board.nbWalls(0) + ". P2 = " + board.nbWalls(1))
 	  // print board
-	  println(board.toString)
+	  println(board.toString)	  
+	  
 	  
 	  // logger
 	  logger.log(playerJustMoved.toString) // player just moved

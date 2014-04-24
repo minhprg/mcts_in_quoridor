@@ -53,8 +53,7 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	    if (node.untriedMoves.length != 0) {
 	      // choose a random move using java random
 	      val rand = new Random(System.currentTimeMillis());
-	      val random_index = rand.nextInt(node.untriedMoves.length);
-	      
+	      val random_index = rand.nextInt(node.untriedMoves.length);	      
 	      val m:(String, Int, Int) = node.untriedMoves(random_index)
 	      
 	      // play the action
@@ -79,7 +78,7 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	    while (rollboard.isFinished == false && rollmove.length > 0) {	
 	      val rand = new Random(System.currentTimeMillis())
 	      var random_index = rand.nextInt(rollmove.length)
-	      
+        	      
 	      rollboard = rollboard.playAction(rollmove(random_index), rollplayer)	        	        	        
 	      rollplayer = (rollplayer + 1) % 2
 	      rollmove = QuoridorUtils.get_moves(rollboard, rollplayer)
@@ -92,10 +91,23 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	    // Back propagation
 	    while (node != null) {
 	      //println("4. Backpropagate for: " + rootPlayer)
+	      var result:Int = 0
 	      if (rollboard.isPlayerWin(rootPlayer))
-	        node.updateChild(1)
+	        result = 1
+	      
+	      // Select different backpropagate strategies
+	      if (ptype == AlgorithmNames.OMC)
+	        node.updateOMC(result)
+	      else if (ptype == AlgorithmNames.UCT)
+	        node.updateUCT(result)
+	      else if (ptype == AlgorithmNames.PBBM)
+	        node.updatePBBM(result)
+	      else if (ptype == AlgorithmNames.UCB1TUNED)
+	        node.updateUCB1Tuned(result)
 	      else
-	        node.updateChild(-1)
+	        node.updateOMC(result)
+	        
+	        
 	      node = node.parentNode
 	    }
 	  }
