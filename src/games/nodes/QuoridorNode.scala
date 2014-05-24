@@ -28,7 +28,7 @@ class QuoridorNode (
   var visits:Int = 0
   var value:Double = 0
   var urgency:Double = 0
-  var fairness:Double = 0
+  var fairness:Double = 0  
   
   // Tree node methods
   def addChild(m:(String, Int, Int), s:(Quoridor, Int), step:Int, timeLeft:Int):QuoridorNode = {
@@ -174,5 +174,44 @@ class QuoridorNode (
   // Upper Confidence Bound 1 Tuned
   def UCB1TUNED():QuoridorNode = {
     this
+  }
+  
+  
+  //////////////////////////////////////////////////////////////////////
+  ///////////////////// Modifications for Quoridor /////////////////////
+  //////////////////////////////////////////////////////////////////////
+  
+  /**
+   * Factor function
+   */
+  def factor(node:QuoridorNode):Double = {    
+    val opp = (node.board.nbWalls((node.player + 1) % 2) + 1)
+    val my = (node.board.nbWalls(node.player) + 1)
+    (0.4 * my + 0.15 * opp)
+  }
+  
+  /**
+   * UCT Quoridor
+   *
+   */
+  def UCTQ():QuoridorNode = {
+    this.childNodes.foreach(node => {
+      if (node.visits  == 0) {
+        this.childNodes -= node
+      }
+    })
+    
+    // debug
+    //this.childNodes.foreach(f => {
+      //print("UCT = " + (f.wins / f.visits + sqrt(2 * log(f.visits)/f.visits)))
+      //print("Factor = " + (f.board.nbWalls(f.player) + 2 * f.board.nbWalls((f.player + 1) % 2)))
+      //print("==================")
+    //})
+    
+    this.childNodes.sortWith(
+        (node1, node2) => 
+          (node1.wins / node1.visits + sqrt(2 * log(node1.visits)/node1.visits)) + factor(node1) < 
+          ((node2.wins / node2.visits + sqrt(2 * log(node2.visits)/node2.visits)))  + factor(node2)
+          ).takeRight(1)(0)    
   }
 }

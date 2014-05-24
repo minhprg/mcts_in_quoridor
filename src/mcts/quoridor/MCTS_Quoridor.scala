@@ -41,6 +41,9 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	        node = node.PBBM()
 	      else if (ptype == AlgorithmNames.UCB1TUNED)
 	        node = node.UCB1TUNED()
+	      // Custom quoridor options  
+	      else if (ptype == AlgorithmNames.UCTQ)
+	        node = node.UCTQ()
 	      else
 	        node = node.OMC()
 	        

@@ -22,7 +22,7 @@ class Player(t:String) extends Agent {
 	  var agent = new MCTS_Quoridor(state, itermax, step, timeLeft)
 	  
 	  if (ptype == AlgorithmNames.OMC || ptype == AlgorithmNames.UCT || 
-	      ptype == AlgorithmNames.PBBM || ptype == AlgorithmNames.UCB1TUNED) {	    
+	      ptype == AlgorithmNames.PBBM || ptype == AlgorithmNames.UCB1TUNED || ptype == AlgorithmNames.UCTQ) {	    
 	    return agent.start(ptype)
 	  }
 	  else
