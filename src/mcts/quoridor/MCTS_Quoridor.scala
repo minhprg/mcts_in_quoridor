@@ -15,12 +15,21 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
   val timeLeft:Int = t
   
   
-  def run(ptype:String):(String, Int, Int) = {
+  def run(ptype:String, finalmove:String):(String, Int, Int) = {
 	  var rootNode:QuoridorNode = new QuoridorNode(state = this.rootState)
 	  val (rootBoard:Quoridor, rootPlayer:Int) = this.rootState
 	  
 	  var counter:Int = 0
 	  
+	  println("Branching:" + rootNode.untriedMoves.length)
+	  
+	  // update branching factor
+	  QuoridorMeasurements.currentBranchingFactor = rootNode.untriedMoves.length
+	  
+	  // current max depth
+	  var currentMaxDepth = 0
+	  
+	  // start iterations
 	  for (i <- 0 until this.itermax) {
 	    var node:QuoridorNode = rootNode
 	    var state:(Quoridor, Int) = (rootBoard.cloneBoard, rootPlayer)
@@ -44,6 +53,12 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	      // Custom quoridor options  
 	      else if (ptype == AlgorithmNames.UCTQ)
 	        node = node.UCTQ()
+	      else if (ptype == AlgorithmNames.OMCQ)
+	        node = node.OMCQ()
+	      else if (ptype == AlgorithmNames.PBBMQ)
+	        node = node.PBBMQ()
+	      else if (ptype == AlgorithmNames.UCB1TUNEDQ)
+	        node = node.UCB1TUNEDQ()
 	      else
 	        node = node.OMC()
 	        
@@ -73,9 +88,6 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	    var rollboard:Quoridor = board.cloneBoard() // self board
 	    var rollmove:ArrayBuffer[(String, Int, Int)] = QuoridorUtils.get_moves(rollboard, rollplayer)
 	    
-	    //println("Rollplayer is:" + rollplayer)
-	    //println("Roll move is:" + rollmove)
-	    
 	    // Start simulations!
 	    // println("3. Simulation")
 	    while (rollboard.isFinished == false && rollmove.length > 0) {	
@@ -84,16 +96,18 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
         	      
 	      rollboard = rollboard.playAction(rollmove(random_index), rollplayer)	        	        	        
 	      rollplayer = (rollplayer + 1) % 2
-	      rollmove = QuoridorUtils.get_moves(rollboard, rollplayer)
-	      
-	      //println(rollboard)
-	      //println("Next player:" + rollplayer + ". Iteration:" + counter + ". Step:" + steps)
-	      //println("Moves = " + rollmove)	      
+	      rollmove = QuoridorUtils.get_moves(rollboard, rollplayer)  
 	    }	    
 	    
-	    // Back propagation
+	    // Depth counter
+	    var depthCounter = -1
+	    
+	    // Back propagation	    
 	    while (node != null) {
 	      //println("4. Backpropagate for: " + rootPlayer)
+	      // update depth counter
+	      depthCounter += 1
+	      
 	      var result:Int = 0
 	      if (rollboard.isPlayerWin(rootPlayer))
 	        result = 1
@@ -101,40 +115,54 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	      // Select different backpropagate strategies
 	      if (ptype == AlgorithmNames.OMC)
 	        node.updateOMC(result)
-	      else if (ptype == AlgorithmNames.UCT)
+	      else if (ptype == AlgorithmNames.UCT || ptype == AlgorithmNames.UCTQ)
 	        node.updateUCT(result)
-	      else if (ptype == AlgorithmNames.PBBM)
+	      else if (ptype == AlgorithmNames.PBBM || ptype == AlgorithmNames.PBBMQ)
 	        node.updatePBBM(result)
-	      else if (ptype == AlgorithmNames.UCB1TUNED)
+	      else if (ptype == AlgorithmNames.UCB1TUNED || ptype == AlgorithmNames.UCB1TUNEDQ)
 	        node.updateUCB1Tuned(result)
 	      else
 	        node.updateOMC(result)
 	        
-	        
 	      node = node.parentNode
 	    }
+	    
+	    // Check to update the current Max Depth
+	    if (depthCounter > currentMaxDepth)
+	      currentMaxDepth = depthCounter
 	  }
 	  
-	  // statistics
-	  /*
-	  println("Results:" + rootNode.childNodes.length)	  
-	  rootNode.childNodes.foreach(item => {
-	    println("Node action: " + item.move)
-	    println("Node score: " + item.visits + ", " + item.wins)
-	  })
-	  * 
-	  */
+	  // update the max depth to measurement
+	  QuoridorMeasurements.currentTreeMaxDepth = currentMaxDepth
 	  
-	  // Return the appropriate move
-	  val result:(String, Int, Int) = rootNode.childNodes.sortWith((n1,n2)=> (n1.visits) < (n2.visits)).takeRight(1)(0).move
+	  // statistics
+	  println("\n Results:" + rootNode.childNodes.length)	  
+	  rootNode.childNodes.foreach(item => {	    
+	    println("Action:" + item.move + ", Payoffs: " + item.payoffs + ", Visit: " + item.visits + ", Win: " + item.wins + ", Value:" + item.value + 
+	        ", Urgency:" + item.urgency + ", fUrgency:" + item.omc_urgency + ", fFairness:" + item.omc_fairness + ", UCT:" + item.uct_value)
+	  })
+	  
+	  
+	  // Final move selection
+	  var result:(String, Int, Int) = rootNode.robustChild
+	  if (finalmove == "max")
+	    result = rootNode.maxChild
+	  else if (finalmove == "robust")
+	    result = rootNode.robustChild
+	  else if (finalmove == "robustmax")
+	    result = rootNode.robustMaxChild
+	  else (finalmove == "secure")
+	    result = rootNode.secureChild
+	  
+	  
 	  println("\nFinal move of player " + rootNode.player + " is:" + result)
 	  result
   }
   
   
-  def start(ptype:String):(String, Int, Int) = {
+  def start(ptype:String, finalmove:String):(String, Int, Int) = {
     println("Start mcts step: " + this.steps)
-    val move:(String, Int, Int) = this.run(ptype)
+    val move:(String, Int, Int) = this.run(ptype, finalmove:String)
     move
   }
 }

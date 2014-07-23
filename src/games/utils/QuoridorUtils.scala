@@ -38,10 +38,11 @@ object QuoridorUtils {
 	  
 	  var moves: ArrayBuffer[(String, Int, Int)] = new ArrayBuffer[(String, Int, Int)]()
 	  
-	  if (myway.length > 1)
+	 if (myway.length > 1)
 	    moves += (("P", myway(1)._1, myway(1)._2))
 	  else
 	    board.getLegalPawnMoves(player).foreach(f => {moves += f})
+	  
 	  // consider walls
 	  considerWallMoves(way, myway.length, board, player).foreach(f => { moves += f})
 	  
@@ -60,12 +61,30 @@ object QuoridorUtils {
 	    val y:Int = oppway(i)._2
 	    // defines positions
 	    val positions:Array[(Int, Int)] = Array(
-	    		(x - 2, y - 1), (x - 2, y),
-	    		//(x - 1, y - 2), (x - 1, y - 1), (x - 1, y), (x - 1, y + 1),
-	    		(x - 1, y), (x - 1, y + 1),
-	    		//(x, y - 2), (x, y - 1), (x, y), (x, y + 1),
-	    		(x, y), (x, y + 1),
-	    		(x + 1, y - 1), (x + 1, y)
+	    		//(x - 2, y - 2), 
+	    		//(x - 2, y - 1), 
+	    		//(x - 2, y), 
+	    		//(x - 2, y + 1),  
+	    		
+	    		(x - 1, y - 2), 
+	    		(x - 1, y - 1), 
+	    		(x - 1, y), 
+	    		(x - 1, y + 1),
+	    		
+	    		(x, y - 2), 
+	    		(x, y - 1), 
+	    		(x, y), 
+	    		(x, y + 1),
+	    		
+	    		(x + 1, y - 2), 
+	    		(x + 1, y - 1), 
+	    		(x + 1, y), 
+	    		(x + 1, y + 1)
+	    		
+	    		//(x + 2, y - 2), 
+	    		//(x + 2, y - 1), 
+	    		//(x + 2, y), 
+	    		//(x + 2, y + 1)
 	    )
 	    // if player still has walls left
 	    if (board.nbWalls(player) > 0) {
