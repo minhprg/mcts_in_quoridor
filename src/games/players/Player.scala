@@ -1,6 +1,5 @@
 package games.players
 
-import games.players.Agent
 import games.Quoridor
 import mcts.quoridor._
 import games.utils._
