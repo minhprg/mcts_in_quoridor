@@ -25,7 +25,7 @@ class QuoridorNode (
   
   // Monte-Carlo tree search values
   var wins:Int = 0
-  var visits:Int = 0 // when you create a node, it is visited 1
+  var visits:Int = 1 // when you create a node, it is visited 1
   var value:Double = 0
   var payoffs:Double = 0
   var urgency:Double = 1
@@ -40,8 +40,8 @@ class QuoridorNode (
   def addChild(m:(String, Int, Int), s:(Quoridor, Int), step:Int, timeLeft:Int):QuoridorNode = {
     val n:QuoridorNode = new QuoridorNode(m, this, s, step, timeLeft)
     n.depth = this.depth + 1 // increase the depth of the tree when descent
-    
-    this.untriedMoves -= m
+    if (this.untriedMoves.length > 0) //small check for parallelism
+    	this.untriedMoves -= m
     this.childNodes.append(n)
     n
   }

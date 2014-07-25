@@ -2,6 +2,7 @@ package application
 
 import games._
 import games.players._
+import testbed.parallelism._ // For testing purpose
 import java.lang.Integer
 
 object Main extends App {
@@ -38,6 +39,7 @@ object Main extends App {
       
       def selectGame(name:String): Any = game match {
         case "quoridor" => QuoridorGame.run(agent1, agent2, prefix, iteration1, iteration2, final1, final2)
+        case "quoridorPar" => QuoridorGamePar.run(agent1, agent2, prefix, iteration1, iteration2, final1, final2)
         case _ => QuoridorGame.run(agent1, agent2, prefix, iteration1, iteration2, final1, final2)
       }
       
