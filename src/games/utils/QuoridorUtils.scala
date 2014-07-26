@@ -52,8 +52,8 @@ object QuoridorUtils {
 	def considerWallMoves(oppway:ArrayBuffer[(Int, Int)], myway:Int, board:Quoridor, player:Int):ArrayBuffer[(String, Int, Int)] = {
 	  var moves: ArrayBuffer[(String, Int, Int)] = new ArrayBuffer[(String, Int, Int)]()	  
 	  var limit:Int = oppway.length
-	  if (oppway.length > 1)
-	    limit = 1
+	  if (oppway.length > 4)
+	    limit = 4
 	    
 	  // along the path of opponent	  
 	  for (i <- 0 until limit) {

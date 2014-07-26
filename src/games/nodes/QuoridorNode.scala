@@ -10,18 +10,22 @@ class QuoridorNode (
     m:(String, Int, Int) = null, 
     parent: QuoridorNode = null, 
     state: (Quoridor, Int),
-    s: Int = 0,
-    t: Int = 0
+    simulation: String,
+    stepNumber: Int = 0
     ) extends GameNode {
   
   val board:Quoridor = state._1
   val player:Int = state._2
   val move:(String, Int, Int) = m
-  val step: Int = s
-  val time_left:Int = t
+  val step: Int = stepNumber
   var childNodes: ArrayBuffer[QuoridorNode] = ArrayBuffer[QuoridorNode]()
   val parentNode = parent
+  val simulationType = simulation
+  
+  // If the simulation is "e" then use the branching factor reduction, else use all actions
   var untriedMoves: ArrayBuffer[(String, Int, Int)] = QuoridorUtils.getchildNodes(this.board, this.player)
+  if (this.simulationType == "a")
+	    untriedMoves = this.board.getActions(this.player)
   
   // Monte-Carlo tree search values
   var wins:Int = 0
@@ -37,8 +41,8 @@ class QuoridorNode (
   var uct_value:Double = 0 // UCT Value
   
   // Tree node methods
-  def addChild(m:(String, Int, Int), s:(Quoridor, Int), step:Int, timeLeft:Int):QuoridorNode = {
-    val n:QuoridorNode = new QuoridorNode(m, this, s, step, timeLeft)
+  def addChild(m:(String, Int, Int), s:(Quoridor, Int), step:Int):QuoridorNode = {
+    val n:QuoridorNode = new QuoridorNode(m, this, s, this.simulation, step)
     n.depth = this.depth + 1 // increase the depth of the tree when descent
     if (this.untriedMoves.length > 0) //small check for parallelism
     	this.untriedMoves -= m
@@ -62,7 +66,7 @@ class QuoridorNode (
         this.value = total / this.childNodes.length
     }
     else
-      this.value = this.payoffs / this.visits
+      this.value = this.wins / this.visits
   }
   
   def updateOMC(result:Int) {
@@ -107,22 +111,6 @@ class QuoridorNode (
     }
     else
       this.value = this.payoffs / this.visits
-    
-    // if it has child node - start calculate mix
-    
-//    if (this.childNodes.length > 0) {
-//      var meanWeight = 182
-//      var valueMean:Double = 0
-//      // best child
-//      val node0:QuoridorNode = this.childNodes.sortWith((n1, n2) => n1.value < n2.value).takeRight(1)(0)
-//      this.childNodes.foreach(node => {
-//        valueMean += node.value
-//      })
-//      valueMean = valueMean / this.childNodes.length
-//      
-//      // calculate PBBM strategy
-//      this.value = (valueMean * meanWeight + node0.value * node0.visits) / (meanWeight + node0.visits)
-//    }
   }
   
   def updateUCB1Tuned(result:Int) {

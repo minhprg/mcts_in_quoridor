@@ -7,19 +7,20 @@ import java.util.Random
 import scala.collection.mutable.ArrayBuffer
 import scala.math._
 import games.utils._
+import scala.util.control.Breaks._
 
-class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
+class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step:Int) {
   val rootState:(Quoridor, Int) = state
   val itermax:Int = iterations
-  val steps:Int = s
-  val timeLeft:Int = t
+  val timeLimit:Int = timePerMove
+  val steps:Int = step    
   
   
-  def run(ptype:String, finalmove:String):(String, Int, Int) = {
-	  var rootNode:QuoridorNode = new QuoridorNode(state = this.rootState)
+  def run(ptype:String, simulation:String, finalmove:String):(String, Int, Int) = {
+	  var rootNode:QuoridorNode = new QuoridorNode(state = this.rootState, simulation = simulation)
 	  val (rootBoard:Quoridor, rootPlayer:Int) = this.rootState
 	  
-	  var counter:Int = 0
+	  var iterationsCounter:Int = 0
 	  
 	  println("Branching:" + rootNode.untriedMoves.length)
 	  
@@ -29,17 +30,31 @@ class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	  // current max depth
 	  var currentMaxDepth = 0
 	  
-	  // start iterations
-	  (0 to this.itermax).par.foreach(item => {
+	  /**
+	   * ***************************
+	   * Start full MCTS Iterations
+	   * ***************************
+	   */
+	  val startTime = System.nanoTime // fixed start time
+	  var endTime = System.nanoTime // end time init
+	  
+	  //for (i <- 0 until this.itermax) {
+	  // it will stop when still has time
+	  (1 to 1000000).par.foreach(item => {
+	    // TIMER CHECK FIRST
+	    if (((endTime - startTime) / 1000 / 1000000) > timePerMove)
+	      break
+	      
 	    var node:QuoridorNode = rootNode
 	    var state:(Quoridor, Int) = (rootBoard.cloneBoard, rootPlayer)
 	    var (board:Quoridor, player:Int) = state
 	    
-	    //println("Iteration " + (counter + 1) + ". Branching:" + node.untriedMoves.length)
-	    print(counter + 1 + " ")
-	    counter += 1
+	    print(iterationsCounter + 1 + " ")
+	    iterationsCounter += 1
 	    
-	    // Selection 
+	    /**
+	     *  Selection
+	     */ 
 	    while (node.untriedMoves.length == 0 && node.childNodes.length > 0) {
 	      // choosing different algorithm
 	      if (ptype == AlgorithmNames.OMC)
@@ -66,8 +81,9 @@ class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	      player = node.player
 	    }
 	    
-	    // Expansion
-	    // println("2. Expansion")
+	    /**
+	     * Expansion
+	     */
 	    if (node.untriedMoves.length != 0) {
 	      // choose a random move using java random
 	      val rand = new Random(System.currentTimeMillis());
@@ -77,34 +93,43 @@ class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	      // play the action
 	      state = ( (node.board.cloneBoard().playAction(m, player)), (player + 1) % 2 )
 	      // add new child node
-	      node = node.addChild(m, state, this.steps, this.timeLeft)
+	      node = node.addChild(m, state, this.steps)
 	      // update player and board
 	      board = state._1
 	      player = state._2
 	    }
 	    
-	    // Simulation - Self playing mode
+	    /**
+	     * Simulation
+	     */
 	    var rollplayer:Int = player // self player
-	    var rollboard:Quoridor = board.cloneBoard() // self board
+	    var rollboard:Quoridor = board.cloneBoard() // self board	    	    
+	    // get move selection
 	    var rollmove:ArrayBuffer[(String, Int, Int)] = QuoridorUtils.get_moves(rollboard, rollplayer)
+	    if (simulation == "a")
+	      rollmove = rollboard.getActions(rollplayer)
 	    
 	    // Start simulations!
-	    // println("3. Simulation")
 	    while (rollboard.isFinished == false && rollmove.length > 0) {	
 	      val rand = new Random(System.currentTimeMillis())
 	      var random_index = rand.nextInt(rollmove.length)
         	      
 	      rollboard = rollboard.playAction(rollmove(random_index), rollplayer)	        	        	        
 	      rollplayer = (rollplayer + 1) % 2
-	      rollmove = QuoridorUtils.get_moves(rollboard, rollplayer)  
+	      // get move selection
+	      if (simulation == "a")
+	        rollmove = rollboard.getActions(rollplayer)
+	      else  
+	        rollmove = QuoridorUtils.get_moves(rollboard, rollplayer)  
 	    }	    
 	    
 	    // Depth counter
 	    var depthCounter = -1
 	    
-	    // Back propagation	    
+	    /**
+	     *  Backpropagation
+	     */  
 	    while (node != null) {
-	      //println("4. Backpropagate for: " + rootPlayer)
 	      // update depth counter
 	      depthCounter += 1
 	      
@@ -113,7 +138,7 @@ class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	        result = 1
 	      
 	      // Select different backpropagate strategies
-	      if (ptype == AlgorithmNames.OMC)
+	      if (ptype == AlgorithmNames.OMC || ptype == AlgorithmNames.OMCQ)
 	        node.updateOMC(result)
 	      else if (ptype == AlgorithmNames.UCT || ptype == AlgorithmNames.UCTQ)
 	        node.updateUCT(result)
@@ -130,20 +155,37 @@ class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	    // Check to update the current Max Depth
 	    if (depthCounter > currentMaxDepth)
 	      currentMaxDepth = depthCounter
+	      	      
+	    // Update the end time
+	    endTime = System.nanoTime
 	  })
-	  
+	  /**
+	   * End of full MCTS iterations
+	   */
+
+	  // call tree helpers to calculate the number of average branching factor
+	  var treeHelper:QuoridorTreeUtils = new QuoridorTreeUtils(rootNode)
+	  treeHelper.analyseAverageBranchingFactor()
+	  QuoridorMeasurements.currentAverageBranchingFactor = treeHelper.averageBranchingFactor
+	  println("\n total BF: " + treeHelper.totalNumberOfBranches + ", Nodes:" + treeHelper.totalNumberOfNodes + ", AVG: " + treeHelper.averageBranchingFactor)
 	  // update the max depth to measurement
 	  QuoridorMeasurements.currentTreeMaxDepth = currentMaxDepth
+	  // update number of iterations
+	  QuoridorMeasurements.currentNumberOfIterations = iterationsCounter
 	  
-	  // statistics
-	  println("\n Results:" + rootNode.childNodes.length)	  
+	  /**
+	   * Testing part - SHOULD BE REMOVED when finish
+	   */
+	  println("\n Iterations: " + iterationsCounter)
+	  println("Results:" + rootNode.childNodes.length)	  
 	  rootNode.childNodes.foreach(item => {	    
 	    println("Action:" + item.move + ", Payoffs: " + item.payoffs + ", Visit: " + item.visits + ", Win: " + item.wins + ", Value:" + item.value + 
 	        ", Urgency:" + item.urgency + ", fUrgency:" + item.omc_urgency + ", fFairness:" + item.omc_fairness + ", UCT:" + item.uct_value)
 	  })
 	  
-	  
-	  // Final move selection
+	  /**
+	   * Final Move selections
+	   */
 	  var result:(String, Int, Int) = rootNode.robustChild
 	  if (finalmove == "max")
 	    result = rootNode.maxChild
@@ -154,15 +196,16 @@ class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, s:Int, t:Int) {
 	  else (finalmove == "secure")
 	    result = rootNode.secureChild
 	  
-	  
 	  println("\nFinal move of player " + rootNode.player + " is:" + result)
+	  
+	  // returns
 	  result
   }
   
   
-  def start(ptype:String, finalmove:String):(String, Int, Int) = {
+  def start(ptype:String, simulation:String, finalmove:String):(String, Int, Int) = {
     println("Start mcts step: " + this.steps)
-    val move:(String, Int, Int) = this.run(ptype, finalmove:String)
+    val move:(String, Int, Int) = this.run(ptype, simulation, finalmove)
     move
   }
 }

@@ -1,0 +1,21 @@
+Quoridor program parameters
+===========================
+[1]: Agent type
+	- quoridor for normal program
+	- quoridorPar for a parallelism-enabled program
+[2]: Number of full MCTS iterations of Player 1
+[3]: Number of full MCTS iterations of Player 2
+[4]: Strategy for Player 1
+[5]: Strategy for Player 2
+[6]: Simulation strategy for Player 1
+[7]: Simulation strategy for Player 2
+[8]: Final Move selection for Player 1
+[9]: Final Move selection for Player 2
+[10]: Time set per move (in seconds, integer)
+[11]: Output log file
+
+Parameters descriptions
+=======================
+[1]: Strategy = {OMC, PBBM, UCT, OMCQ, PBBMQ, UCTQ}
+[2]: Simulation strategy = {a, e} (a = all, e = enhanced)
+[3]: Final move selection = {max, robust, robustmax}
