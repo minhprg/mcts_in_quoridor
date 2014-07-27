@@ -32,8 +32,8 @@ class QuoridorNode (
   var visits:Int = 1 // when you create a node, it is visited 1
   var value:Double = 0
   var payoffs:Double = 0
-  var urgency:Double = 1
-  var fairness:Double = 1 
+  var urgency:Double = 0
+  var fairness:Double = 0
   var depth:Int = 0
   // Quoridor
   var omc_urgency:Double = 0 // portion for quoridor, used in OMC Urgency
@@ -67,14 +67,33 @@ class QuoridorNode (
         this.value = total / this.childNodes.length
     }
     else
-      this.value = this.wins / this.visits
+      this.value = this.payoffs
   }
   
   def updateOMC(result:Int) {
+    // update wins and payoffs
     if (result > 0)
       this.wins += result
     this.visits += 1
     this.payoffs += result
+    
+    // calculate urgency of this node
+    if (this.parentNode != null && this.value != 0) {
+    	// best move value
+		val node0:QuoridorNode = this.parentNode.childNodes.sortWith((n1, n2) => n1.value < n2.value).takeRight(1)(0)
+		val v_0:Double = node0.value	
+		// n_p
+		val n_p = this.parentNode.visits
+		// expectation
+		val expectation:Double = this.wins / this.visits
+		// standard deviation
+		val sigma:Double = sqrt( this.wins - 2 * pow(expectation, 2) ) / this.visits
+	    // urgency function update to child node
+		val erf:Erf = new Erf
+		this.urgency = 1 - erf.erf( (v_0 - this.value) / (sqrt(2) * sigma) )		
+		println("U(i) = " + this.urgency + ". Value:" + this.value + ". V0: " + node0.value + ". Visits:" + this.visits + ". Wins:" + this.wins + ". Parent:" + this.parentNode.visits)
+    }
+    
     // if it has child node - start calculate Informed Average
     if (this.childNodes.length > 0) {
       var t1:Double = 0
@@ -94,15 +113,38 @@ class QuoridorNode (
       this.value = (t1 / t2)
     }
     else
-      this.value = this.payoffs / this.visits
+      this.value = (2 * this.wins - this.visits)
   }
   
   def updatePBBM(result:Int) {
+    // update wins and payoffs
     if (result > 0)
       this.wins += result
     this.visits += 1
     this.payoffs += result
     
+    // calculate urgency of this node
+    if (this.parentNode != null && this.value != 0) {
+    	// best move value
+		val node0:QuoridorNode = this.parentNode.childNodes.sortWith((n1, n2) => n1.value < n2.value).takeRight(1)(0)
+		val v_0:Double = node0.value	
+		// e(x_0)
+	    val e_0 = node0.wins / node0.visits
+		// standard deviation
+	    val sigma_0:Double = sqrt( node0.wins - 2 * pow(e_0, 2) ) / node0.visits
+		// n_p
+		val n_p = this.parentNode.visits
+		// expectation
+		val expectation:Double = this.wins / this.visits
+		// standard deviation
+		val sigma:Double = sqrt( this.wins - 2 * pow(expectation, 2) ) / this.visits
+	    // urgency function update to child node
+		val erf:Erf = new Erf
+		this.urgency = exp( -2.4 * (v_0 - this.value) / sqrt(2 * (pow(sigma_0, 2) + pow(sigma, 2))) )
+		println("U(i) = " + this.urgency + ". Value:" + this.value + ". V0: " + node0.value + ". Visits:" + this.visits + ". Wins:" + this.wins + ". Parent:" + this.parentNode.visits)
+    }
+    
+    // update values
     if (this.childNodes.length > 0) {
       var total:Double = 0
       this.childNodes.foreach(node => {
@@ -111,7 +153,7 @@ class QuoridorNode (
       this.value = total / this.childNodes.length
     }
     else
-      this.value = this.payoffs / this.visits
+      this.value = (2 * this.wins - this.visits)
   }
   
   def updateUCB1Tuned(result:Int) {
