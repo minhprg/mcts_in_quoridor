@@ -176,11 +176,12 @@ class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, timePerMove:Int, 
 	  /**
 	   * Testing part - SHOULD BE REMOVED when finish
 	   */
-	  println("\n Iterations: " + iterationsCounter)
-	  println("Results:" + rootNode.childNodes.length)	  
+	  //println("\n Iterations: " + iterationsCounter)
+	  //println("Results:" + rootNode.childNodes.length)	  
 	  rootNode.childNodes.foreach(item => {	    
 	    println("Action:" + item.move + ", Payoffs: " + item.payoffs + ", Visit: " + item.visits + ", Win: " + item.wins + ", Value:" + item.value + 
-	        ", Urgency:" + item.urgency + ", fUrgency:" + item.omc_urgency + ", fFairness:" + item.omc_fairness + ", UCT:" + item.uct_value)
+	        ", Urgency:" + item.urgency + ", Fairness: " + item.fairness + ", OMC_Urgency:" + item.omc_urgency + ", OMC_Fairness:" + item.omc_fairness + ", UCT:" + item.uct_value + 
+	        ", PBBM_Urgency:" + item.pbbm_urgency + ", PBBM_Fairness:" + item.pbbm_fairness)
 	  })
 	  
 	  /**
@@ -196,7 +197,7 @@ class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, timePerMove:Int, 
 	  else (finalmove == "secure")
 	    result = rootNode.secureChild
 	  
-	  println("\nFinal move of player " + rootNode.player + " is:" + result)
+	  println("\nFinal move of player " + rootNode.player + " (" + ptype + ") is:" + result)
 	  
 	  // returns
 	  result
