@@ -46,6 +46,8 @@ object QuoridorUtils {
 	  // consider walls
 	  considerWallMoves(way, myway.length, board, player).foreach(f => { moves += f})
 	  
+	  //print(moves.length + " ")
+	  
 	  moves
 	}
 	
