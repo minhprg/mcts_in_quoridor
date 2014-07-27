@@ -171,8 +171,8 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	  /**
 	   * Testing part - SHOULD BE REMOVED when finish
 	   */
-	  println("\n Iterations: " + iterationsCounter)
-	  println("Results:" + rootNode.childNodes.length)	  
+	  //println("\n Iterations: " + iterationsCounter)
+	  //println("Results:" + rootNode.childNodes.length)	  
 	  rootNode.childNodes.foreach(item => {	    
 	    println("Action:" + item.move + ", Payoffs: " + item.payoffs + ", Visit: " + item.visits + ", Win: " + item.wins + ", Value:" + item.value + 
 	        ", Urgency:" + item.urgency + ", Fairness: " + item.fairness + ", OMC_Urgency:" + item.omc_urgency + ", OMC_Fairness:" + item.omc_fairness + ", UCT:" + item.uct_value + 
