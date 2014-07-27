@@ -44,7 +44,7 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	    var state:(Quoridor, Int) = (rootBoard.cloneBoard, rootPlayer)
 	    var (board:Quoridor, player:Int) = state
 	    
-	    print(iterationsCounter + 1 + " ")
+	    //print(iterationsCounter + 1 + " ")
 	    iterationsCounter += 1
 	    
 	    /**
@@ -175,7 +175,8 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	  println("Results:" + rootNode.childNodes.length)	  
 	  rootNode.childNodes.foreach(item => {	    
 	    println("Action:" + item.move + ", Payoffs: " + item.payoffs + ", Visit: " + item.visits + ", Win: " + item.wins + ", Value:" + item.value + 
-	        ", Urgency:" + item.urgency + ", fUrgency:" + item.omc_urgency + ", fFairness:" + item.omc_fairness + ", UCT:" + item.uct_value)
+	        ", Urgency:" + item.urgency + ", Fairness: " + item.fairness + ", OMC_Urgency:" + item.omc_urgency + ", OMC_Fairness:" + item.omc_fairness + ", UCT:" + item.uct_value + 
+	        ", PBBM_Urgency:" + item.pbbm_urgency + ", PBBM_Fairness:" + item.pbbm_fairness)
 	  })
 	  
 	  /**
@@ -191,7 +192,7 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	  else (finalmove == "secure")
 	    result = rootNode.secureChild
 	  
-	  println("\nFinal move of player " + rootNode.player + " is:" + result)
+	  println("\nFinal move of player " + rootNode.player + " (" + ptype + ") is:" + result)
 	  
 	  // returns
 	  result

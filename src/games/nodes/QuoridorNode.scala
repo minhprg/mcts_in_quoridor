@@ -33,19 +33,20 @@ class QuoridorNode (
   var value:Double = 0
   var payoffs:Double = 0
   var urgency:Double = 1
-  var fairness:Double = 0  
+  var fairness:Double = 1 
   var depth:Int = 0
   // Quoridor
   var omc_urgency:Double = 0 // portion for quoridor, used in OMC Urgency
   var omc_fairness:Double = 0 // portion for quoridor, used in Fairness
   var uct_value:Double = 0 // UCT Value
+  var pbbm_urgency:Double = 0 // PBBM urgency
+  var pbbm_fairness:Double = 0 // PBBM value
   
   // Tree node methods
   def addChild(m:(String, Int, Int), s:(Quoridor, Int), step:Int):QuoridorNode = {
     val n:QuoridorNode = new QuoridorNode(m, this, s, this.simulation, step)
     n.depth = this.depth + 1 // increase the depth of the tree when descent
-    if (this.untriedMoves.length > 0) //small check for parallelism
-    	this.untriedMoves -= m
+    this.untriedMoves -= m
     this.childNodes.append(n)
     n
   }
@@ -154,13 +155,12 @@ class QuoridorNode (
 	
     // calculate the urgency
     this.childNodes.foreach(child => {
-      if (child.visits > 0) {
-        val p_i: Double = 1 / child.visits
+      if (child.visits > 0) {        
         // expectation
-        val expectation:Double = p_i * (2 * child.wins - child.visits)
+        val expectation:Double = child.wins / child.visits
         
         // standard deviation
-        val sigma:Double = sqrt( (pow(1 - expectation, 2)) + (pow(1 + expectation, 2)) * p_i )
+        val sigma:Double = sqrt( child.wins - 2 * pow(expectation, 2) ) / child.visits
         
         // urgency function update to child node
         val erf:Erf = new Erf
@@ -171,6 +171,12 @@ class QuoridorNode (
       }
     })
     
+    // store fairness values
+    this.childNodes.foreach(n1 => {
+      n1.fairness = ((n_p * n1.urgency) / (n1.visits * totalUrgency))
+    })
+    
+    // sort and select
     val m:QuoridorNode = this.childNodes.sortWith(
         (n1, n2) => 
           ((n_p * n1.urgency) / (n1.visits * totalUrgency)) <
@@ -186,12 +192,10 @@ class QuoridorNode (
     
     // v_0
     val v_0 = node0.value
-    // p_0
-    val p_0 = 1 / node0.visits
     // e(x_0)
-    val e_0 = p_0 * (2 * node0.wins - node0.visits)
+    val e_0 = node0.wins / node0.visits
     // standard deviation
-    val sigma_0:Double = sqrt( (pow(1 - e_0, 2) + pow(1 + e_0, 2)) * p_0 )
+    val sigma_0:Double = sqrt( node0.wins - 2 * pow(e_0, 2) ) / node0.visits
     // n_p
     val n_p:Int = this.visits
     
@@ -200,12 +204,11 @@ class QuoridorNode (
     
     this.childNodes.foreach(child => {
       if (child.visits > 0) {
-        val p_i:Double = 1 / child.visits
-        
         // expectation
-        val expectation:Double = p_i * (2 * child.wins - child.visits)
+        val expectation:Double = child.wins / child.visits
+        
         // standard deviation
-        val sigma:Double = sqrt( (pow(1 - expectation, 2) + pow(1 + expectation, 2)) * p_i )
+        val sigma:Double = sqrt( child.wins - 2 * pow(expectation, 2) ) / child.visits
         // urgency function update to child node
         child.urgency = exp( -2.4 * (v_0 - child.value) / sqrt(2 * (pow(sigma_0, 2) + pow(sigma, 2))) )
         // update total urgency
@@ -213,6 +216,12 @@ class QuoridorNode (
       }
     })
     
+    // store fairness value
+    this.childNodes.foreach(n1 => {
+      n1.fairness = ( (n_p * n1.urgency) / (n1.visits * totalUrgency) )
+    })
+    
+    // sort and select
     this.childNodes.sortWith((n1, n2) => 
       	( (n_p * n1.urgency) / (n1.visits * totalUrgency) ) < 
       	( (n_p * n2.urgency) / (n2.visits * totalUrgency) )
@@ -233,8 +242,8 @@ class QuoridorNode (
    * Factor functions - each selection has its own factor
    */
   def factorUCT(node:QuoridorNode):Double = {
-    val x1 = 0.4
-    val x2 = 0.15
+    val x1 = 0.06
+    val x2 = 0.02
     val opp = node.board.nbWalls((node.player + 1) % 2)
     val my = node.board.nbWalls(node.player)
     x1 * my + x2 * opp
@@ -262,12 +271,26 @@ class QuoridorNode (
     node.omc_fairness
   }
   
-  def factorPBBM(node:QuoridorNode):Double = {
-    val x1 = 5
-    val x2 = 1
+  def factorUrgencyPBBM(node:QuoridorNode):Double = {
+    // only add this portion if this is a pawn move
+    if (node.move._1 == "P") {
+      val x1 = 0.5
+      val x2 = 0.05
+      val opp = node.board.nbWalls((node.player + 1) % 2)
+      val my = node.board.nbWalls(node.player)    
+      node.pbbm_urgency = (x1 * my + x2 * opp) / (my + opp) // update this value
+      node.pbbm_urgency
+    }
+    0    
+  }
+  
+  def factorFairnessPBBM(node:QuoridorNode):Double = {
+    val x1 = 0.1
+    val x2 = 0.03
     val opp = node.board.nbWalls((node.player + 1) % 2)
     val my = node.board.nbWalls(node.player)
-    x1 * my + x2 * opp
+    node.pbbm_fairness =  exp(x1 * my + x2 * opp)
+    node.pbbm_fairness
   }
   
   
@@ -284,8 +307,8 @@ class QuoridorNode (
     // sort
     this.childNodes.sortWith(
         (node1, node2) => 
-          (node1.wins / node1.visits + sqrt(2 * log(node1.visits)/node1.visits)) + factorUCT(node1) < 
-          ((node2.wins / node2.visits + sqrt(2 * log(node2.visits)/node2.visits)))  + factorUCT(node2)
+          (node1.wins / node1.visits + sqrt(constant * log(this.visits)/node1.visits)) + factorUCT(node1) < 
+          ((node2.wins / node2.visits + sqrt(constant * log(this.visits)/node2.visits)))  + factorUCT(node2)
           ).takeRight(1)(0)    
   }
   
@@ -305,12 +328,11 @@ class QuoridorNode (
     // calculate the urgency
     this.childNodes.foreach(child => {
       if (child.visits > 0) {
-        val p_i: Double = 1 / child.visits
         // expectation
-        val expectation:Double = p_i * (2 * child.wins - child.visits)
+        val expectation:Double = child.wins / child.visits
         
         // standard deviation
-        val sigma:Double = sqrt( (pow(1 - expectation, 2)) + (pow(1 + expectation, 2)) * p_i )
+        val sigma:Double = sqrt( child.wins - 2 * pow(expectation, 2) ) / child.visits
         
         // urgency function update to child node
         val erf:Erf = new Erf
@@ -321,6 +343,12 @@ class QuoridorNode (
       }
     })
     
+    // store fairness values in node
+    this.childNodes.foreach(node => {
+      node.fairness = ((n_p * node.urgency) / (node.visits * totalUrgency)) + factorFairnessOMC(node)
+    })
+    
+    // sort and select
     val m:QuoridorNode = this.childNodes.sortWith(
         (n1, n2) => 
           ((n_p * n1.urgency) / (n1.visits * totalUrgency)) + factorFairnessOMC(n1) <
@@ -337,12 +365,10 @@ class QuoridorNode (
     
     // v_0
     val v_0 = node0.value
-    // p_0
-    val p_0 = 1 / node0.visits
     // e(x_0)
-    val e_0 = p_0 * (2 * node0.wins - node0.visits)
+    val e_0 = node0.wins / node0.visits
     // standard deviation
-    val sigma_0:Double = sqrt( (pow(1 - e_0, 2) + pow(1 + e_0, 2)) * p_0 )
+    val sigma_0:Double = sqrt( node0.wins - 2 * pow(e_0, 2) ) / node0.visits
     // n_p
     val n_p:Int = this.visits
     
@@ -351,22 +377,28 @@ class QuoridorNode (
     
     this.childNodes.foreach(child => {
       if (child.visits > 0) {
-        val p_i:Double = 1 / child.visits
-        
         // expectation
-        val expectation:Double = p_i * (2 * child.wins - child.visits)
+        val expectation:Double = child.wins / child.visits
+        
         // standard deviation
-        val sigma:Double = sqrt( (pow(1 - expectation, 2) + pow(1 + expectation, 2)) * p_i )
+        val sigma:Double = sqrt( child.wins - 2 * pow(expectation, 2) ) / child.visits
         // urgency function update to child node
-        child.urgency = exp( -2.4 * (v_0 - child.value) / sqrt(2 * (pow(sigma_0, 2) + pow(sigma, 2))) )
+        child.urgency = exp( -2.4 * (v_0 - child.value) / sqrt(2 * (pow(sigma_0, 2) + pow(sigma, 2))) ) 
+        				+ factorUrgencyPBBM(child) // a factor for PBBM
         // update total urgency
         totalUrgency += child.urgency        
       }
     })
     
+    // store fairness value
+    this.childNodes.foreach(n1 => {
+      n1.fairness = ( (n_p * n1.urgency) / (n1.visits * totalUrgency) ) + factorFairnessPBBM(n1)
+    })
+    
+    // sort and select
     this.childNodes.sortWith((n1, n2) => 
-      	( (n_p * n1.urgency) / (n1.visits * totalUrgency) ) + factorPBBM(n1) < 
-      	( (n_p * n2.urgency) / (n2.visits * totalUrgency) ) + factorPBBM(n2)
+      	( (n_p * n1.urgency) / (n1.visits * totalUrgency) ) + factorFairnessPBBM(n1) < 
+      	( (n_p * n2.urgency) / (n2.visits * totalUrgency) ) + factorFairnessPBBM(n2)
         ).takeRight(1)(0)
   }
   
