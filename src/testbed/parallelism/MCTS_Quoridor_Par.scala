@@ -49,7 +49,7 @@ class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, timePerMove:Int, 
 	    var state:(Quoridor, Int) = (rootBoard.cloneBoard, rootPlayer)
 	    var (board:Quoridor, player:Int) = state
 	    
-	    print(iterationsCounter + 1 + " ")
+	    //print(iterationsCounter + 1 + " ")
 	    iterationsCounter += 1
 	    
 	    /**
