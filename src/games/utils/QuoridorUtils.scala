@@ -4,6 +4,7 @@ import games.Quoridor
 import scala.collection.mutable.ArrayBuffer
 import algorithms._
 import scala.math._
+import java.util.Random
 
 object QuoridorUtils {
 	/**
@@ -54,8 +55,8 @@ object QuoridorUtils {
 	def considerWallMoves(oppway:ArrayBuffer[(Int, Int)], myway:Int, board:Quoridor, player:Int):ArrayBuffer[(String, Int, Int)] = {
 	  var moves: ArrayBuffer[(String, Int, Int)] = new ArrayBuffer[(String, Int, Int)]()	  
 	  var limit:Int = oppway.length
-	  if (oppway.length > 1)
-	    limit = 1
+	  if (oppway.length > 0)
+	    limit = 0
 	    
 	  // along the path of opponent	  
 	  for (i <- 0 until limit) {
@@ -145,5 +146,64 @@ object QuoridorUtils {
 	    })
 	  }
 	  null
+	}
+	
+	/**
+	 * This method gets:
+	 * - One random wall placement
+	 * - All the legal pawn moves
+	 */
+	def getRandomActions(board:Quoridor, player:Int):ArrayBuffer[(String, Int, Int)] = {
+	  /**
+	   * val rand = new Random(System.currentTimeMillis())
+	      var random_index = rand.nextInt(rollmove.length)
+	   */
+	  // flag to stop until a correct random move is found	  
+	  var isFoundAMove:Boolean = false
+	  // random seed
+	  var rand = new Random(System.currentTimeMillis())
+	  // a move to be returned
+	  var move:(String, Int, Int) = ("P", -1, -1)
+	  // array of moves
+	  var moves:ArrayBuffer[(String, Int, Int)] = new ArrayBuffer[(String, Int, Int)]()
+	  var myway:ArrayBuffer[(Int, Int)] = new ArrayBuffer[(Int, Int)]()
+	  
+	  // pawns
+	  var mypath = QuoridorUtils.doBFSMoves(board, player) // my path
+	  while (mypath != null) {
+	    myway += ((mypath.id._1, mypath.id._2))
+	    mypath = mypath.previous
+	  }
+	  myway = myway.reverse
+	  if (myway.length > 1)
+	    moves += (("P", myway(1)._1, myway(1)._2))
+	  else
+	    board.getLegalPawnMoves(player).foreach(f => {moves += f})
+	  
+	  // wall placement
+	  while (isFoundAMove == false) {
+	    // random variables
+	    var random_wall_type = rand.nextInt(1)
+	    var random_x = rand.nextInt(9)
+	    var random_y = rand.nextInt(9)
+	    var random_wall_string:String = "WH"
+	    var random_wall_isHorizon:Boolean = true
+	    if (random_wall_type != 1) {
+	      random_wall_string = "WV"
+	      random_wall_isHorizon = false
+	    }
+	    
+	    // forming the move
+	    move = (random_wall_string, random_x, random_y)
+	    
+	    // check wall possible here
+	    if (board.isWallPossibleHere( (random_x, random_y), random_wall_isHorizon)) {
+	      // stop finding
+	      isFoundAMove = true
+	    }
+	  }
+	  moves += move
+	  
+	  moves
 	}
 }

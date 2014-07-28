@@ -44,7 +44,7 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	    var state:(Quoridor, Int) = (rootBoard.cloneBoard, rootPlayer)
 	    var (board:Quoridor, player:Int) = state
 	    
-	    //print(iterationsCounter + 1 + " ")
+	    print(iterationsCounter + 1 + " ")
 	    iterationsCounter += 1
 	    
 	    /**
@@ -100,9 +100,9 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	    var rollplayer:Int = player // self player
 	    var rollboard:Quoridor = board.cloneBoard() // self board	    	    
 	    // get move selection
-	    var rollmove:ArrayBuffer[(String, Int, Int)] = QuoridorUtils.get_moves(rollboard, rollplayer)
+	    var rollmove:ArrayBuffer[(String, Int, Int)] = QuoridorUtils.get_moves(rollboard, rollplayer)	    
 	    if (simulation == "a")
-	      rollmove = rollboard.getActions(rollplayer)
+	      rollmove = QuoridorUtils.getRandomActions(rollboard, rollplayer)
 	    
 	    // Start simulations!
 	    while (rollboard.isFinished == false && rollmove.length > 0) {	
@@ -113,7 +113,7 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	      rollplayer = (rollplayer + 1) % 2
 	      // get move selection
 	      if (simulation == "a")
-	        rollmove = rollboard.getActions(rollplayer)
+	        rollmove = QuoridorUtils.getRandomActions(rollboard, rollplayer)
 	      else  
 	        rollmove = QuoridorUtils.get_moves(rollboard, rollplayer)  
 	    }	    
@@ -171,13 +171,16 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	  /**
 	   * Testing part - SHOULD BE REMOVED when finish
 	   */
-	  //println("\n Iterations: " + iterationsCounter)
-	  //println("Results:" + rootNode.childNodes.length)	  
+	  println("Iterations: " + iterationsCounter)
+	  //println("Results:" + rootNode.childNodes.length)
+	  /*
 	  rootNode.childNodes.foreach(item => {	    
 	    println("Action:" + item.move + ", Payoffs: " + item.payoffs + ", Visit: " + item.visits + ", Win: " + item.wins + ", Value:" + item.value + 
 	        ", Urgency:" + item.urgency + ", Fairness: " + item.fairness + ", OMC_Urgency:" + item.omc_urgency + ", OMC_Fairness:" + item.omc_fairness + ", UCT:" + item.uct_value + 
 	        ", PBBM_Urgency:" + item.pbbm_urgency + ", PBBM_Fairness:" + item.pbbm_fairness)
 	  })
+	  * 
+	  */
 	  
 	  /**
 	   * Final Move selections
