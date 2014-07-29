@@ -110,18 +110,22 @@ class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, timePerMove:Int, 
 	      rollmove = rollboard.getActions(rollplayer)
 	    
 	    // Start simulations!
-	    while (rollboard.isFinished == false && rollmove.length > 0) {	
+	    while (rollboard.isFinished == false) {	
 	      val rand = new Random(System.currentTimeMillis())
 	      var random_index = rand.nextInt(rollmove.length)
+	      
+	      println("Rollmoves:" + rollmove)
+	      println("Selected:" + rollmove(random_index))	      
         	      
 	      rollboard = rollboard.playAction(rollmove(random_index), rollplayer)	        	        	        
 	      rollplayer = (rollplayer + 1) % 2
 	      // get move selection
 	      if (simulation == "a")
-	        rollmove = rollboard.getActions(rollplayer)
+	        rollmove = QuoridorUtils.getRandomActions(rollboard, rollplayer)
 	      else  
-	        rollmove = QuoridorUtils.get_moves(rollboard, rollplayer)  
-	    }	    
+	        rollmove = QuoridorUtils.get_moves(rollboard, rollplayer)
+	      println("Rollboard:\n" + rollboard)
+	    } 
 	    
 	    // Depth counter
 	    var depthCounter = -1
@@ -176,13 +180,16 @@ class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, timePerMove:Int, 
 	  /**
 	   * Testing part - SHOULD BE REMOVED when finish
 	   */
-	  //println("\n Iterations: " + iterationsCounter)
-	  //println("Results:" + rootNode.childNodes.length)	  
+	  println("Iterations: " + iterationsCounter)
+	  //println("Results:" + rootNode.childNodes.length)
+	  /*
 	  rootNode.childNodes.foreach(item => {	    
 	    println("Action:" + item.move + ", Payoffs: " + item.payoffs + ", Visit: " + item.visits + ", Win: " + item.wins + ", Value:" + item.value + 
 	        ", Urgency:" + item.urgency + ", Fairness: " + item.fairness + ", OMC_Urgency:" + item.omc_urgency + ", OMC_Fairness:" + item.omc_fairness + ", UCT:" + item.uct_value + 
 	        ", PBBM_Urgency:" + item.pbbm_urgency + ", PBBM_Fairness:" + item.pbbm_fairness)
 	  })
+	  * 
+	  */
 	  
 	  /**
 	   * Final Move selections

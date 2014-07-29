@@ -47,7 +47,7 @@ object QuoridorUtils {
 		  considerWallMoves(way, myway.length, board, player).foreach(f => { moves += f})
 	 }
 	 else
-	    board.getLegalPawnMoves(player).foreach(f => {moves += f})
+	    board.getLegalPawnMoves(player).foreach(f => { moves += f })
 	  //print(moves.length + " ")
 	  
 	  moves
