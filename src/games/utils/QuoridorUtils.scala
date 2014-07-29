@@ -205,7 +205,7 @@ object QuoridorUtils {
 	    // forming the move
 	    move = (random_wall_string, random_x, random_y)
 	    
-	    println("Trying:" + move)
+	    println("Trying " + counter + ":" + move)
 	    
 	    // check wall possible here
 	    if (board.isWallPossibleHere( (random_x, random_y), random_wall_isHorizon)) {
