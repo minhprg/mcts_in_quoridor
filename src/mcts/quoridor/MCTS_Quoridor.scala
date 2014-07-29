@@ -106,7 +106,7 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	    
 	    // Start simulations!
 	    println("Self-playing game!")
-	    while (rollboard.isFinished == false && rollmove.length > 0) {	
+	    while (rollboard.isFinished == false) {	
 	      val rand = new Random(System.currentTimeMillis())
 	      var random_index = rand.nextInt(rollmove.length)
 	      
@@ -122,7 +122,7 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	      else  
 	        rollmove = QuoridorUtils.get_moves(rollboard, rollplayer)
 	        
-	        println("Roll board:" + rollboard)
+	        println("Roll board:\n" + rollboard)
 	    }	    
 	    
 	    println("Finished simulations")
