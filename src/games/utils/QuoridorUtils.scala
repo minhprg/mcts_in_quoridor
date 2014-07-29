@@ -25,6 +25,7 @@ object QuoridorUtils {
 	  var moves: ArrayBuffer[(String, Int, Int)] = new ArrayBuffer[(String, Int, Int)]()
 	  
 	  // check if BFS exists for both path
+	  println("Get simulation moves - Pawn Start")
 	  if (path != null && mypath != null) {
 		  var way:ArrayBuffer[(Int, Int)] = new ArrayBuffer[(Int, Int)]()
 		  var myway:ArrayBuffer[(Int, Int)] = new ArrayBuffer[(Int, Int)]()
@@ -49,7 +50,7 @@ object QuoridorUtils {
 	 else
 	    board.getLegalPawnMoves(player).foreach(f => { moves += f })
 	  //print(moves.length + " ")
-	  
+	  println("Get simulation moves - End")
 	  moves
 	}
 	
@@ -188,6 +189,8 @@ object QuoridorUtils {
 	  */
 	  board.getLegalPawnMoves(player).foreach(f => {moves += f})
 	  
+	  println("Get random moves! Start wall placement")
+	  
 	  // wall placement
 	  while (isFoundAMove == false && board.nbWalls(player) > 0) {
 	    // random variables
@@ -210,6 +213,8 @@ object QuoridorUtils {
 	      isFoundAMove = true
 	    }
 	  }
+	  
+	  println("Get random moves! Wall placement done!")
 	  
 	  moves
 	}
