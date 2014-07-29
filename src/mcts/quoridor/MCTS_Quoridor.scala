@@ -110,9 +110,9 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	      val rand = new Random(System.currentTimeMillis())
 	      var random_index = rand.nextInt(rollmove.length)
 	      
-	      //println("Rollmoves:" + rollmove)
-	      //println("Random Index:" + random_index)
-	      //println("Selected move:" + rollmove(random_index))
+	      println("Rollmoves:" + rollmove)
+	      println("Random Index:" + random_index)
+	      println("Selected move:" + rollmove(random_index))
         	      
 	      rollboard = rollboard.playAction(rollmove(random_index), rollplayer)	        	        	        
 	      rollplayer = (rollplayer + 1) % 2
