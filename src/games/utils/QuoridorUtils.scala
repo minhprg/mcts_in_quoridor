@@ -194,7 +194,7 @@ object QuoridorUtils {
 	    // random seed
 	    var rand = new Random(System.currentTimeMillis())
 	    // random variables
-	    var random_wall_type = rand.nextInt(1)
+	    var random_wall_type = rand.nextInt(2)
 	    var random_x = rand.nextInt(9)
 	    var random_y = rand.nextInt(9)
 	    var random_wall_string:String = "WH"
