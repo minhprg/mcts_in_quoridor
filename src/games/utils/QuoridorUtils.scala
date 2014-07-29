@@ -123,9 +123,8 @@ object QuoridorUtils {
 	  var queue = new Queue
 	  queue.push(start)
 	  
-	  
 	  while (!queue.isEmpty) {
-	    var node:Vertex = queue.pop	    
+	    var node:Vertex = queue.pop
 	    // check for termination
 	    if (node.id._1 == board.goals(player))
 	      return node
@@ -145,6 +144,7 @@ object QuoridorUtils {
 	      }
 	    })
 	  }
+	  println("NULL BFS!")
 	  null
 	}
 	
