@@ -167,8 +167,6 @@ object QuoridorUtils {
 	  // array of moves
 	  var moves:ArrayBuffer[(String, Int, Int)] = new ArrayBuffer[(String, Int, Int)]()
 	  
-	  
-	  /*
 	  // pawns
 	  var myway:ArrayBuffer[(Int, Int)] = new ArrayBuffer[(Int, Int)]()
 	  var mypath = QuoridorUtils.doBFSMoves(board, player) // my path
@@ -184,13 +182,13 @@ object QuoridorUtils {
 	  else {
 	    board.getLegalPawnMoves(player).foreach(f => {moves += f})
 	  }
-	  */
-	  board.getLegalPawnMoves(player).foreach(f => {moves += f})
+	  // board.getLegalPawnMoves(player).foreach(f => {moves += f})
 	  
 	  println("Get random moves! Start wall placement")
 	  
 	  // wall placement
-	  while (isFoundAMove == false && board.nbWalls(player) > 0) {
+	  var counter:Int = 0 // a counter to make sure the loop will not run forever
+	  while (isFoundAMove == false && board.nbWalls(player) > 0 && counter < 100) {
 	    // random seed
 	    var rand = new Random(System.currentTimeMillis())
 	    // random variables
@@ -214,6 +212,14 @@ object QuoridorUtils {
 	      // stop finding
 	      isFoundAMove = true
 	    }
+	    
+	    counter += 1
+	  }
+	  
+	  // if the isFoundAMove still be false, meaning it can't find a wall placement by random, 
+	  // we will use get all legal wall moves
+	  if (isFoundAMove == false) {
+	    board.getLegalWallMoves(player).foreach(wall => {moves += wall})
 	  }
 	  
 	  println("Get random moves! Wall placement done!")
