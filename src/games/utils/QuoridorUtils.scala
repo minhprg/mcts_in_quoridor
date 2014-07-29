@@ -203,7 +203,6 @@ object QuoridorUtils {
 	      isFoundAMove = true
 	    }
 	  }
-	  moves += move
 	  
 	  moves
 	}
