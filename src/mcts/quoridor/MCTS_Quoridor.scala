@@ -105,7 +105,7 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	      rollmove = QuoridorUtils.getRandomActions(rollboard, rollplayer)
 	    
 	    // Start simulations!
-	    //println("Self-playing game!")
+	    println("Self-playing game!")
 	    while (rollboard.isFinished == false && rollmove.length > 0) {	
 	      val rand = new Random(System.currentTimeMillis())
 	      var random_index = rand.nextInt(rollmove.length)
@@ -124,6 +124,8 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	        
 	        println("Roll board:" + rollboard)
 	    }	    
+	    
+	    println("Finished simulations")
 	    
 	    // Depth counter
 	    var depthCounter = -1
