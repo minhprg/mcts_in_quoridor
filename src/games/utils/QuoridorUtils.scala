@@ -161,9 +161,7 @@ object QuoridorUtils {
 	      var random_index = rand.nextInt(rollmove.length)
 	   */
 	  // flag to stop until a correct random move is found	  
-	  var isFoundAMove:Boolean = false
-	  // random seed
-	  var rand = new Random(System.currentTimeMillis())
+	  var isFoundAMove:Boolean = false	  
 	  // a move to be returned
 	  var move:(String, Int, Int) = ("P", -1, -1)
 	  // array of moves
@@ -193,6 +191,8 @@ object QuoridorUtils {
 	  
 	  // wall placement
 	  while (isFoundAMove == false && board.nbWalls(player) > 0) {
+	    // random seed
+	    var rand = new Random(System.currentTimeMillis())
 	    // random variables
 	    var random_wall_type = rand.nextInt(1)
 	    var random_x = rand.nextInt(9)
@@ -206,6 +206,8 @@ object QuoridorUtils {
 	    
 	    // forming the move
 	    move = (random_wall_string, random_x, random_y)
+	    
+	    println("Trying:" + move)
 	    
 	    // check wall possible here
 	    if (board.isWallPossibleHere( (random_x, random_y), random_wall_isHorizon)) {
