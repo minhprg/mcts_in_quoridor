@@ -167,10 +167,11 @@ object QuoridorUtils {
 	  var move:(String, Int, Int) = ("P", -1, -1)
 	  // array of moves
 	  var moves:ArrayBuffer[(String, Int, Int)] = new ArrayBuffer[(String, Int, Int)]()
-	  var myway:ArrayBuffer[(Int, Int)] = new ArrayBuffer[(Int, Int)]()
 	  
+	  
+	  /*
 	  // pawns
-	  
+	  var myway:ArrayBuffer[(Int, Int)] = new ArrayBuffer[(Int, Int)]()
 	  var mypath = QuoridorUtils.doBFSMoves(board, player) // my path
 	  if (mypath != null) {
 		  while (mypath != null) {
@@ -184,6 +185,8 @@ object QuoridorUtils {
 	  else {
 	    board.getLegalPawnMoves(player).foreach(f => {moves += f})
 	  }
+	  */
+	  board.getLegalPawnMoves(player).foreach(f => {moves += f})
 	  
 	  // wall placement
 	  while (isFoundAMove == false && board.nbWalls(player) > 0) {
