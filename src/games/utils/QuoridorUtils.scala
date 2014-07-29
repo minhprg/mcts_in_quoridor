@@ -22,31 +22,32 @@ object QuoridorUtils {
 	  val opponent:Int = (player + 1) % 2
 	  var path = QuoridorUtils.doBFSMoves(board, opponent) // get path of opponents
 	  var mypath = QuoridorUtils.doBFSMoves(board, player) // my path
-	  var way:ArrayBuffer[(Int, Int)] = new ArrayBuffer[(Int, Int)]()
-	  var myway:ArrayBuffer[(Int, Int)] = new ArrayBuffer[(Int, Int)]()
-	  
-	  while (path != null) {
-	    way += ((path.id._1, path.id._2))
-	    path = path.previous
-	  }
-	  way = way.reverse
-	  
-	  while (mypath != null) {
-	    myway += ((mypath.id._1, mypath.id._2))
-	    mypath = mypath.previous
-	  }
-	  myway = myway.reverse
-	  
 	  var moves: ArrayBuffer[(String, Int, Int)] = new ArrayBuffer[(String, Int, Int)]()
 	  
-	 if (myway.length > 1)
-	    moves += (("P", myway(1)._1, myway(1)._2))
-	  else
+	  // check if BFS exists for both path
+	  if (path != null && mypath != null) {
+		  var way:ArrayBuffer[(Int, Int)] = new ArrayBuffer[(Int, Int)]()
+		  var myway:ArrayBuffer[(Int, Int)] = new ArrayBuffer[(Int, Int)]()
+		  
+		  while (path != null) {
+		    way += ((path.id._1, path.id._2))
+		    path = path.previous
+		  }
+		  way = way.reverse
+		  
+		  while (mypath != null) {
+		    myway += ((mypath.id._1, mypath.id._2))
+		    mypath = mypath.previous
+		  }
+		  myway = myway.reverse
+		  if (myway.length > 1) {
+		    moves += (("P", myway(1)._1, myway(1)._2))
+		  }
+		  // consider walls
+		  considerWallMoves(way, myway.length, board, player).foreach(f => { moves += f})
+	 }
+	 else
 	    board.getLegalPawnMoves(player).foreach(f => {moves += f})
-	  
-	  // consider walls
-	  considerWallMoves(way, myway.length, board, player).foreach(f => { moves += f})
-	  
 	  //print(moves.length + " ")
 	  
 	  moves
@@ -171,15 +172,18 @@ object QuoridorUtils {
 	  // pawns
 	  
 	  var mypath = QuoridorUtils.doBFSMoves(board, player) // my path
-	  while (mypath != null) {
-	    myway += ((mypath.id._1, mypath.id._2))
-	    mypath = mypath.previous
+	  if (mypath != null) {
+		  while (mypath != null) {
+		    myway += ((mypath.id._1, mypath.id._2))
+		    mypath = mypath.previous
+		  }
+		  myway = myway.reverse
+		  if (myway.length > 1)
+		    moves += (("P", myway(1)._1, myway(1)._2))
 	  }
-	  myway = myway.reverse
-	  if (myway.length > 1)
-	    moves += (("P", myway(1)._1, myway(1)._2))
-	  else
-	  	board.getLegalPawnMoves(player).foreach(f => {moves += f})
+	  else {
+	    board.getLegalPawnMoves(player).foreach(f => {moves += f})
+	  }
 	  
 	  // wall placement
 	  while (isFoundAMove == false && board.nbWalls(player) > 0) {
