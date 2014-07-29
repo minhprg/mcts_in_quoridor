@@ -120,7 +120,9 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	      if (simulation == "a")
 	        rollmove = QuoridorUtils.getRandomActions(rollboard, rollplayer)
 	      else  
-	        rollmove = QuoridorUtils.get_moves(rollboard, rollplayer)  
+	        rollmove = QuoridorUtils.get_moves(rollboard, rollplayer)
+	        
+	        println("Roll board:" + rollboard)
 	    }	    
 	    
 	    // Depth counter
