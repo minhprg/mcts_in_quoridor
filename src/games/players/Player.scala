@@ -14,7 +14,7 @@ class Player(strategyType:String) extends Agent {
   } 
 	
   /**
-   * Quoridor play method
+   * Quoridor play method by using MCTS
    */
   def playQuoridor(player:Int, itermax:Int, simulation:String, finalmove:String, timePerMove:Int, percepts:Quoridor, step:Int):(String,Int,Int) = {
 	  val state:(Quoridor, Int) = (percepts, player)	  	  
@@ -32,5 +32,12 @@ class Player(strategyType:String) extends Agent {
 	    return agent.start(AlgorithmNames.UCTQ, simulation, finalmove)
 	  
 	  throw new Exception("Failed to playQuoridor in class games.Player!")
+  }
+  
+  /**
+   * Quoridor playing using Minimax, alpha-beta and cut-off
+   */
+  def playQuoridorUsingMinimax(player:Int, percepts:Quoridor, step:Int):(String, Int, Int) = {
+    ("",0,0)
   }
 }
