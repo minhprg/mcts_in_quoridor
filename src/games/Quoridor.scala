@@ -420,7 +420,7 @@ class Quoridor extends Board {
         of the player minus the one of its opponent. It also takes into
         account the remaining number of walls.
    */
-  def getScore(player:Int):Unit = {
+  def getScore(player:Int):Int = {
     var score:Int = this.minStepsBeforeVictory((player + 1) % 2) - 
     				this.minStepsBeforeVictory(player)
     if (score == 0)

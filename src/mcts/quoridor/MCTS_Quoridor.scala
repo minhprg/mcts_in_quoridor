@@ -7,6 +7,7 @@ import java.util.Random
 import scala.collection.mutable.ArrayBuffer
 import scala.math._
 import games.utils._
+import games.players._
 
 class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step:Int) {
   val rootState:(Quoridor, Int) = state
@@ -108,13 +109,22 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	    while (rollboard.isFinished == false) {	
 	      val rand = new Random(System.currentTimeMillis())
 	      var random_index = rand.nextInt(rollmove.length)
+	      //var agent = new MinimaxAgent
+	      /*
+	      var tmp_move = rollmove.sortWith(
+	        (move1, move2) => 
+	          (agent.evaluate(rollboard.cloneBoard.playAction(move1, rollplayer), rollplayer)) < 
+	          (agent.evaluate(rollboard.cloneBoard.playAction(move2, rollplayer), rollplayer)) 
+	          ).takeRight(1)(0) 
+	      */
 	      
-	      println("Rollmoves:" + rollmove)
-	      println("Selected:" + rollmove(random_index))	      
+	      //println("Rollmoves:" + rollmove)
+	      //println("Selected:" + rollmove(random_index))	      
         	      
 	      rollboard = rollboard.playAction(rollmove(random_index), rollplayer)
+	      //rollboard = rollboard.playAction(tmp_move, rollplayer)
 	      
-	      println("Rollboard:\n" + rollboard)
+	      //println("Rollboard:\n" + rollboard)
 	      
 	      rollplayer = (rollplayer + 1) % 2
 	      // get move selection

@@ -5,7 +5,7 @@ import games.players._
 import games.utils._
 
 object QuoridorGame {
-  def run(agent1: String, agent2:String, iteration1:Int, iteration2:Int, simulation1: String, simulation2:String, final1:String, final2:String, timePerMove:Int, prefix:String) = {
+  def run(program1:String, program2:String, agent1: String, agent2:String, iteration1:Int, iteration2:Int, simulation1: String, simulation2:String, final1:String, final2:String, timePerMove:Int, prefix:String) = {
 	/**
 	 * Get arguments to decide agents
 	 */
@@ -52,19 +52,19 @@ object QuoridorGame {
 	  val now = System.nanoTime // timer
 	  // first move for player1 - this can be dynamically chosen in future!
 	  if (board.playerJustMoved == -1) {
-	    move = player1.playQuoridor(players.PLAYER1, itermax1, simulation1, final1, timePerMove, board, steps + 1)
+	    move = player1.playQuoridor(players.PLAYER1, program1, itermax1, simulation1, final1, timePerMove, board, steps + 1)
 	    board.playAction(move, players.PLAYER1)
 	    playerJustMoved = players.PLAYER1
 	  }
 	  else if (board.playerJustMoved == 1) {
 	    // player1 turn
-	    move = player1.playQuoridor(players.PLAYER1, itermax1, simulation1, final1, timePerMove, board, steps + 1)
+	    move = player1.playQuoridor(players.PLAYER1, program1, itermax1, simulation1, final1, timePerMove, board, steps + 1)
 	    board.playAction(move, players.PLAYER1)
 	    playerJustMoved = players.PLAYER1
 	  }
 	  else {
 	    // player2 turn
-	    move = player2.playQuoridor(players.PLAYER2, itermax2, simulation2, final2, timePerMove, board, steps + 1)
+	    move = player2.playQuoridor(players.PLAYER2, program2, itermax2, simulation2, final2, timePerMove, board, steps + 1)
 	    board.playAction(move, players.PLAYER2)
 	    playerJustMoved = players.PLAYER2
 	  }

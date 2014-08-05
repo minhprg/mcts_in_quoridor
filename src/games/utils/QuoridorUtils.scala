@@ -25,7 +25,7 @@ object QuoridorUtils {
 	  var moves: ArrayBuffer[(String, Int, Int)] = new ArrayBuffer[(String, Int, Int)]()
 	  
 	  // check if BFS exists for both path
-	  println("Get simulation moves - Pawn Start")
+	  //println("Get simulation moves - Pawn Start")
 	  if (path != null && mypath != null) {
 		  var way:ArrayBuffer[(Int, Int)] = new ArrayBuffer[(Int, Int)]()
 		  var myway:ArrayBuffer[(Int, Int)] = new ArrayBuffer[(Int, Int)]()
@@ -50,7 +50,7 @@ object QuoridorUtils {
 	 else
 	    board.getLegalPawnMoves(player).foreach(f => { moves += f })
 	  //print(moves.length + " ")
-	  println("Get simulation moves - End")
+	  //println("Get simulation moves - End")
 	  moves
 	}
 	
@@ -146,7 +146,7 @@ object QuoridorUtils {
 	      }
 	    })
 	  }
-	  println("NULL BFS!")
+	  //println("NULL BFS!")
 	  null
 	}
 	
@@ -184,7 +184,7 @@ object QuoridorUtils {
 	  }
 	  // board.getLegalPawnMoves(player).foreach(f => {moves += f})
 	  
-	  println("Get random moves! Start wall placement")
+	  //println("Get random moves! Start wall placement")
 	  
 	  // wall placement
 	  var counter:Int = 0 // a counter to make sure the loop will not run forever
@@ -205,7 +205,7 @@ object QuoridorUtils {
 	    // forming the move
 	    move = (random_wall_string, random_x, random_y)
 	    
-	    println("Trying " + counter + ":" + move)
+	    //println("Trying " + counter + ":" + move)
 	    
 	    // check wall possible here
 	    if (board.isWallPossibleHere( (random_x, random_y), random_wall_isHorizon)) {
@@ -222,7 +222,7 @@ object QuoridorUtils {
 	    board.getLegalWallMoves(player).foreach(wall => {moves += wall})
 	  }
 	  
-	  println("Get random moves! Wall placement done!")
+	  //println("Get random moves! Wall placement done!")
 	  
 	  moves
 	}
