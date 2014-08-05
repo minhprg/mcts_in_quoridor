@@ -110,19 +110,19 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	    // Start simulations!
 	    while (rollboard.isFinished == false) {	
 	      val rand = new Random(System.currentTimeMillis())
-	      //var random_index = rand.nextInt(rollmove.length)
-	      	      
+	      var random_index = rand.nextInt(rollmove.length)
+	      /*	      
 	      var tmp_move = rollmove.sortWith(
 	        (move1, move2) => 
 	          (agent.evaluateForSimulation(rollboard.cloneBoard.playAction(move1, rollplayer), rollplayer)) < 
 	          (agent.evaluateForSimulation(rollboard.cloneBoard.playAction(move2, rollplayer), rollplayer)) 
 	          ).takeRight(1)(0) 
-	      	      
+	      	*/      
 	      //println("Rollmoves:" + rollmove)
 	      //println("Selected:" + rollmove(random_index))	      
         	      
-	      //rollboard = rollboard.playAction(rollmove(random_index), rollplayer)
-	      rollboard = rollboard.playAction(tmp_move, rollplayer)
+	      rollboard = rollboard.playAction(rollmove(random_index), rollplayer)
+	      //rollboard = rollboard.playAction(tmp_move, rollplayer)
 	      
 	      //println("Rollboard:\n" + rollboard)
 	      

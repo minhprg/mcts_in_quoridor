@@ -3,6 +3,7 @@ package games.players
 import scala.collection.mutable.ArrayBuffer
 import games.Quoridor
 import algorithms.Minimax
+import games.utils._
 
 class MinimaxAgent {
   def successors(board:Quoridor, player:Int):ArrayBuffer[((String, Int, Int), Quoridor, Int)] = {
@@ -50,6 +51,7 @@ class MinimaxAgent {
   
   def evaluateForSimulation(board:Quoridor, player:Int):Double = {
     var score:Double = 0
+    
     //val SPP = board.getShortestPath(player).length
     //val OPP = board.getShortestPath((player + 1) % 2).length
     val player_manhattan = Math.abs(board.pawns(player)._1 - board.goals(player))
@@ -57,9 +59,9 @@ class MinimaxAgent {
     val MDP = (9 - player_manhattan) / 9
     val MDO = (9 - opponent_manhattan) / 9
     
-    val wall_left = board.nbWalls(player) - board.nbWalls((player + 1) % 2)
+    val wall_left = board.nbWalls(player) + board.nbWalls((player + 1) % 2)    
     
-    score = 20 * (MDP - MDO) + wall_left
+    score = 0.747 * player_manhattan + 0.096 * opponent_manhattan + 0.327 * wall_left
     
     return score
   }

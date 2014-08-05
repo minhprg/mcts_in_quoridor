@@ -2,14 +2,14 @@
 
 cd ../../bin/
 
-for i in 1 2 3 4 5
+for i in 1 2
 do
     echo "$i times between omcq(e) Max - Minimax"
-    scala application.Main quoridor mcts minimax 0 0 omcq omcq e e max max 20 /home/qha/tmp/quoridor/set6/
+    scala application.Main quoridor mcts minimax 0 0 omcq omcq e e max max 180 /home/qha/tmp/quoridor/set6/
 done
 
-for i in 1 2 3 4 5
+for i in 1 2
 do
     echo "$i times between Minimax - omcq(e) Max"
-    scala application.Main quoridor minimax mcts 0 0 omcq omcq e e max max 20 /home/qha/tmp/quoridor/set6/
+    scala application.Main quoridor minimax mcts 0 0 omcq omcq e e max max 180 /home/qha/tmp/quoridor/set6/
 done
