@@ -103,26 +103,26 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	    // get move selection
 	    var rollmove:ArrayBuffer[(String, Int, Int)] = QuoridorUtils.get_moves(rollboard, rollplayer)	    
 	    if (simulation == "a")
-	      rollmove = QuoridorUtils.getRandomActions(rollboard, rollplayer)
+	      rollmove = QuoridorUtils.getRandomActions(rollboard, rollplayer)	    
+	    
+	    var agent = new MinimaxAgent // for minimax evluation case
 	    
 	    // Start simulations!
 	    while (rollboard.isFinished == false) {	
 	      val rand = new Random(System.currentTimeMillis())
-	      var random_index = rand.nextInt(rollmove.length)
-	      //var agent = new MinimaxAgent
-	      /*
+	      //var random_index = rand.nextInt(rollmove.length)
+	      	      
 	      var tmp_move = rollmove.sortWith(
 	        (move1, move2) => 
 	          (agent.evaluate(rollboard.cloneBoard.playAction(move1, rollplayer), rollplayer)) < 
 	          (agent.evaluate(rollboard.cloneBoard.playAction(move2, rollplayer), rollplayer)) 
 	          ).takeRight(1)(0) 
-	      */
-	      
+	      	      
 	      //println("Rollmoves:" + rollmove)
 	      //println("Selected:" + rollmove(random_index))	      
         	      
-	      rollboard = rollboard.playAction(rollmove(random_index), rollplayer)
-	      //rollboard = rollboard.playAction(tmp_move, rollplayer)
+	      //rollboard = rollboard.playAction(rollmove(random_index), rollplayer)
+	      rollboard = rollboard.playAction(tmp_move, rollplayer)
 	      
 	      //println("Rollboard:\n" + rollboard)
 	      
