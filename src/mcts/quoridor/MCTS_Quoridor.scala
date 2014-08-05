@@ -114,8 +114,8 @@ class MCTS_Quoridor(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step
 	      	      
 	      var tmp_move = rollmove.sortWith(
 	        (move1, move2) => 
-	          (agent.evaluate(rollboard.cloneBoard.playAction(move1, rollplayer), rollplayer)) < 
-	          (agent.evaluate(rollboard.cloneBoard.playAction(move2, rollplayer), rollplayer)) 
+	          (agent.evaluateForSimulation(rollboard.cloneBoard.playAction(move1, rollplayer), rollplayer)) < 
+	          (agent.evaluateForSimulation(rollboard.cloneBoard.playAction(move2, rollplayer), rollplayer)) 
 	          ).takeRight(1)(0) 
 	      	      
 	      //println("Rollmoves:" + rollmove)

@@ -48,6 +48,22 @@ class MinimaxAgent {
     return score
   }
   
+  def evaluateForSimulation(board:Quoridor, player:Int):Double = {
+    var score:Double = 0
+    //val SPP = board.getShortestPath(player).length
+    //val OPP = board.getShortestPath((player + 1) % 2).length
+    val player_manhattan = Math.abs(board.pawns(player)._1 - board.goals(player))
+    val opponent_manhattan = Math.abs(board.pawns((player + 1) % 2)._1 - board.goals((player + 1) % 2))
+    val MDP = (9 - player_manhattan) / 9
+    val MDO = (9 - opponent_manhattan) / 9
+    
+    val wall_left = board.nbWalls(player) - board.nbWalls((player + 1) % 2)
+    
+    score = 20 * (MDP - MDO) + wall_left
+    
+    return score
+  }
+  
   def play(board:Quoridor, player:Int, step:Int):(String, Int, Int) = {
     var minimax:Minimax = new Minimax(board, player, this)
     minimax.minimax_decision
