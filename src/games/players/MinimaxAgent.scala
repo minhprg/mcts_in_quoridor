@@ -35,8 +35,9 @@ class MinimaxAgent {
   
   def evaluate(board:Quoridor, player:Int):Double = {
     var score:Double = 0
-    val SPP = board.getShortestPath(player).length
-    val OPP = board.getShortestPath((player + 1) % 2).length
+    /*
+    val SPP = board.minStepsBeforeVictory(player)
+    val OPP = board.minStepsBeforeVictory((player + 1) % 2)
     val player_manhattan = Math.abs(board.pawns(player)._1 - board.goals(player))
     val opponent_manhattan = Math.abs(board.pawns((player + 1) % 2)._1 - board.goals((player + 1) % 2))
     val MDP = (9 - player_manhattan) / 9
@@ -44,24 +45,28 @@ class MinimaxAgent {
     
     val wall_left = board.nbWalls(player) - board.nbWalls((player + 1) % 2)
     
-    score = 275 * (((81 - SPP.toDouble) / 81) - ((81 - OPP.toDouble) / 81)) + 129 * (MDP - MDO) + wall_left
+    score = (((81 - SPP.toDouble) / 81) - ((81 - OPP.toDouble) / 81)) + 1 * (MDP - MDO) + wall_left
+    * 
+    */
+    score = board.getScore(player)
     
     return score
   }
   
   def evaluateForSimulation(board:Quoridor, player:Int):Double = {
     var score:Double = 0
-    
-    //val SPP = board.getShortestPath(player).length
-    //val OPP = board.getShortestPath((player + 1) % 2).length
+    /*
     val player_manhattan = Math.abs(board.pawns(player)._1 - board.goals(player))
     val opponent_manhattan = Math.abs(board.pawns((player + 1) % 2)._1 - board.goals((player + 1) % 2))
     val MDP = (9 - player_manhattan) / 9
     val MDO = (9 - opponent_manhattan) / 9
     
-    val wall_left = board.nbWalls(player) + board.nbWalls((player + 1) % 2)    
+    //val wall_left = board.nbWalls(player) + board.nbWalls((player + 1) % 2)    
     
-    score = 0.747 * player_manhattan + 0.096 * opponent_manhattan + 0.327 * wall_left
+    score = 20 * (MDP - MDO) + 10 * (board.nbWalls(player) - board.nbWalls((player + 1) % 2))
+    * 
+    */
+    score = board.getScore(player)
     
     return score
   }

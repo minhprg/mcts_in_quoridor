@@ -7,6 +7,7 @@ import java.util.Random
 import scala.collection.mutable.ArrayBuffer
 import scala.math._
 import games.utils._
+import games.players._
 import scala.util.control.Breaks._
 
 class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, timePerMove:Int, step:Int) {
@@ -49,7 +50,7 @@ class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, timePerMove:Int, 
 	    var state:(Quoridor, Int) = (rootBoard.cloneBoard, rootPlayer)
 	    var (board:Quoridor, player:Int) = state
 	    
-	    //print(iterationsCounter + 1 + " ")
+	    // print(iterationsCounter + 1 + " ")
 	    iterationsCounter += 1
 	    
 	    /**
@@ -105,28 +106,39 @@ class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, timePerMove:Int, 
 	    var rollplayer:Int = player // self player
 	    var rollboard:Quoridor = board.cloneBoard() // self board	    	    
 	    // get move selection
-	    var rollmove:ArrayBuffer[(String, Int, Int)] = QuoridorUtils.get_moves(rollboard, rollplayer)
+	    var rollmove:ArrayBuffer[(String, Int, Int)] = QuoridorUtils.get_moves(rollboard, rollplayer)	    
 	    if (simulation == "a")
-	      rollmove = rollboard.getActions(rollplayer)
+	      rollmove = QuoridorUtils.getRandomActions(rollboard, rollplayer)	    
+	    
+	    var agent = new MinimaxAgent // for minimax evluation case
 	    
 	    // Start simulations!
 	    while (rollboard.isFinished == false) {	
 	      val rand = new Random(System.currentTimeMillis())
-	      var random_index = rand.nextInt(rollmove.length)
-	      
-	      println("Rollmoves:" + rollmove)
-	      println("Selected:" + rollmove(random_index))	      
+	      //var random_index = rand.nextInt(rollmove.length)
+	      	      
+	      var tmp_move = rollmove.sortWith(
+	        (move1, move2) => 
+	          (agent.evaluateForSimulation(rollboard.cloneBoard.playAction(move1, rollplayer), rollplayer)) < 
+	          (agent.evaluateForSimulation(rollboard.cloneBoard.playAction(move2, rollplayer), rollplayer)) 
+	          ).takeRight(1)(0) 
+	      	    
+	      //println("Rollmoves:" + rollmove)
+	      //println("Selected:" + rollmove(random_index))	      
         	      
-	      rollboard = rollboard.playAction(rollmove(random_index), rollplayer)	        	        	        
+	      //rollboard = rollboard.playAction(rollmove(random_index), rollplayer)
+	      rollboard = rollboard.playAction(tmp_move, rollplayer)
+	      
+	      //println("Rollboard:\n" + rollboard)
+	      
 	      rollplayer = (rollplayer + 1) % 2
 	      // get move selection
 	      if (simulation == "a")
 	        rollmove = QuoridorUtils.getRandomActions(rollboard, rollplayer)
 	      else  
-	        rollmove = QuoridorUtils.get_moves(rollboard, rollplayer)
-	      println("Rollboard:\n" + rollboard)
-	    } 
-	    
+	        rollmove = QuoridorUtils.get_moves(rollboard, rollplayer)	      
+	    }	    
+	   	    
 	    // Depth counter
 	    var depthCounter = -1
 	    

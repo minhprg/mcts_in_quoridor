@@ -57,7 +57,7 @@ object Main extends App {
       
       def selectGame(name:String): Any = game match {
         case "quoridor" => QuoridorGame.run(agent1, agent2, selection1, selection2, iteration1, iteration2, simulation1, simulation2, final1, final2, timePerMove, prefix)
-        case "quoridorPar" => QuoridorGamePar.run(selection1, selection2, iteration1, iteration2, simulation1, simulation2, final1, final2, timePerMove, prefix)
+        case "quoridorPar" => QuoridorGamePar.run(agent1, agent2, selection1, selection2, iteration1, iteration2, simulation1, simulation2, final1, final2, timePerMove, prefix)
         case _ => QuoridorGame.run(agent1, agent2, selection1, selection2, iteration1, iteration2, simulation1, simulation2, final1, final2, timePerMove, prefix)
       }
       

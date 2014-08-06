@@ -202,7 +202,7 @@ class Quoridor extends Board {
       })
     }
     // No Path here!
-    throw new Exception("No Path")
+    throw new Exception("No Path")    
   }
   
   /**
@@ -421,11 +421,38 @@ class Quoridor extends Board {
         account the remaining number of walls.
    */
   def getScore(player:Int):Int = {
+    /*
     var score:Int = this.minStepsBeforeVictory((player + 1) % 2) - 
     				this.minStepsBeforeVictory(player)
     if (score == 0)
       score = this.nbWalls(player) - this.nbWalls((player + 1) % 2)
     score
+    * 
+    */
+    var score:Int = 0;
+    if (this.pathExists()) {
+    	var opponent_steps = this.minStepsBeforeVictory((player + 1) % 2)
+	    var player_steps = this.minStepsBeforeVictory(player)
+	    
+	    if (opponent_steps == 0)
+	      return -65
+	    else
+	      return 65
+	    
+	    score = opponent_steps - player_steps + 1 * (this.nbWalls(player) - this.nbWalls((player + 1) % 2))
+	    
+	    return score
+    }
+    else {
+    	val player_manhattan = Math.abs(this.pawns(player)._1 - this.goals(player))
+	    val opponent_manhattan = Math.abs(this.pawns((player + 1) % 2)._1 - this.goals((player + 1) % 2))
+	    val MDP = (9 - player_manhattan) / 9
+	    val MDO = (9 - opponent_manhattan) / 9
+	    val wall_left = this.nbWalls(player) - this.nbWalls((player + 1) % 2)
+	    
+	    score = (MDP - MDO) + wall_left
+	    return score
+    }
   }  
   
   /**
