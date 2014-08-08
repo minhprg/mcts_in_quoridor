@@ -56,7 +56,7 @@ class MinimaxAgent {
     
     //score = 1 * (((81 - SPP.toDouble) / 81) - ((81 - OPP.toDouble) / 81)) + 1 * (MDP - MDO) + goal_side_player + wall_left
     // glendenning
-    score = 0.747 * SPP + 0.096 * OPP + 0.327 * wall_left
+    score = 0.747 * (81 - SPP / 81) + 0.096 * (81 - OPP / 81) + 0.327 * (wall_left /10)
     // score = 20 * (OPP - SPP) + 10
     //score = board.getScore(player)
     
@@ -79,7 +79,7 @@ class MinimaxAgent {
     
     //score = 0.747 * SPP + 0.096 * OPP + 0.327 * wall_left
     //score = 20 * (opponent_manhattan - player_manhattan) + 10 + wall_left
-    score = 20 * (OPP - SPP) + 10
+    score = 0.747 * (81 - SPP / 81) + 0.096 * (81 - OPP / 81) + 0.327 * (wall_left /10)
     //score = board.getScore(player)
     
     return score
