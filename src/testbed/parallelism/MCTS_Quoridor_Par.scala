@@ -116,13 +116,13 @@ class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, timePerMove:Int, 
 	    while (rollboard.isFinished == false) {	
 	      val rand = new Random(System.currentTimeMillis())
 	      //var random_index = rand.nextInt(rollmove.length)
-	      	      
+	      
 	      var tmp_move = rollmove.sortWith(
 	        (move1, move2) => 
 	          (agent.evaluateForSimulation(rollboard.cloneBoard.playAction(move1, rollplayer), rollplayer)) < 
 	          (agent.evaluateForSimulation(rollboard.cloneBoard.playAction(move2, rollplayer), rollplayer)) 
 	          ).takeRight(1)(0) 
-	      	    
+	      
 	      //println("Rollmoves:" + rollmove)
 	      //println("Selected:" + rollmove(random_index))	      
         	      
