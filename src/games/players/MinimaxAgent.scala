@@ -35,38 +35,52 @@ class MinimaxAgent {
   
   def evaluate(board:Quoridor, player:Int):Double = {
     var score:Double = 0
-    /*
+    
     val SPP = board.minStepsBeforeVictory(player)
     val OPP = board.minStepsBeforeVictory((player + 1) % 2)
+    /*
     val player_manhattan = Math.abs(board.pawns(player)._1 - board.goals(player))
     val opponent_manhattan = Math.abs(board.pawns((player + 1) % 2)._1 - board.goals((player + 1) % 2))
+    var goal_side_player = 0
+    if (player_manhattan < 4)
+      goal_side_player = 1
+    var goal_side_opponent = 0
+    if (opponent_manhattan < 4)
+      goal_side_opponent = 1
+    
     val MDP = (9 - player_manhattan) / 9
     val MDO = (9 - opponent_manhattan) / 9
-    
-    val wall_left = board.nbWalls(player) - board.nbWalls((player + 1) % 2)
-    
-    score = (((81 - SPP.toDouble) / 81) - ((81 - OPP.toDouble) / 81)) + 1 * (MDP - MDO) + wall_left
-    * 
     */
-    score = board.getScore(player)
+    
+    val wall_left = board.nbWalls(player) + board.nbWalls((player + 1) % 2)
+    
+    //score = 1 * (((81 - SPP.toDouble) / 81) - ((81 - OPP.toDouble) / 81)) + 1 * (MDP - MDO) + goal_side_player + wall_left
+    // glendenning
+    score = 0.747 * SPP + 0.096 * OPP + 0.327 * wall_left
+    // score = 20 * (OPP - SPP) + 10
+    //score = board.getScore(player)
     
     return score
   }
   
   def evaluateForSimulation(board:Quoridor, player:Int):Double = {
     var score:Double = 0
-    /*
-    val player_manhattan = Math.abs(board.pawns(player)._1 - board.goals(player))
-    val opponent_manhattan = Math.abs(board.pawns((player + 1) % 2)._1 - board.goals((player + 1) % 2))
-    val MDP = (9 - player_manhattan) / 9
-    val MDO = (9 - opponent_manhattan) / 9
+        
+    val SPP = board.minStepsBeforeVictory(player)
+    val OPP = board.minStepsBeforeVictory((player + 1) % 2)
+    //val player_manhattan = Math.abs(board.pawns(player)._1 - board.goals(player))
+    //val opponent_manhattan = Math.abs(board.pawns((player + 1) % 2)._1 - board.goals((player + 1) % 2))
+    //val MDP = (9 - player_manhattan) / 9
+    //val MDO = (9 - opponent_manhattan) / 9
     
-    //val wall_left = board.nbWalls(player) + board.nbWalls((player + 1) % 2)    
+    val wall_left = board.nbWalls(player) + board.nbWalls((player + 1) % 2)    
     
-    score = 20 * (MDP - MDO) + 10 * (board.nbWalls(player) - board.nbWalls((player + 1) % 2))
-    * 
-    */
-    score = board.getScore(player)
+    //score = 20 * (MDP - MDO) + 10 * (board.nbWalls(player) - board.nbWalls((player + 1) % 2))
+    
+    //score = 0.747 * SPP + 0.096 * OPP + 0.327 * wall_left
+    //score = 20 * (opponent_manhattan - player_manhattan) + 10 + wall_left
+    score = 20 * (OPP - SPP) + 10
+    //score = board.getScore(player)
     
     return score
   }
