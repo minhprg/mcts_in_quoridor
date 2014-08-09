@@ -45,7 +45,8 @@ object QuoridorUtils {
 		    moves += (("P", myway(1)._1, myway(1)._2))
 		  }
 		  // consider walls
-		  considerWallMoves(way, myway.length, board, player).foreach(f => { moves += f})
+		  //considerWallMoves(way, myway.length, board, player).foreach(f => { moves += f})
+		  considerWallMovesAroundPawnOnly(board, player).foreach(f => { moves += f})
 	 }
 	 else
 	    board.getLegalPawnMoves(player).foreach(f => { moves += f })
@@ -111,6 +112,61 @@ object QuoridorUtils {
 		    }
 	    }
 	  }
+	  
+	  moves
+	}
+	
+	def considerWallMovesAroundPawnOnly(board:Quoridor, player:Int):ArrayBuffer[(String, Int, Int)] = {
+	  var moves: ArrayBuffer[(String, Int, Int)] = new ArrayBuffer[(String, Int, Int)]()	  
+	  // along the path of opponent	  
+	    val x:Int = board.pawns((player + 1) % 2)._1
+	    val y:Int = board.pawns((player + 1) % 2)._2
+	    // defines positions
+	    val positions:Array[(Int, Int)] = Array(
+	    		(x - 2, y - 2), 
+	    		(x - 2, y - 1), 
+	    		(x - 2, y), 
+	    		(x - 2, y + 1),  
+	    		
+	    		(x - 1, y - 2), 
+	    		(x - 1, y - 1), 
+	    		(x - 1, y), 
+	    		(x - 1, y + 1),
+	    		
+	    		(x, y - 2), 
+	    		(x, y - 1), 
+	    		(x, y), 
+	    		(x, y + 1),
+	    		
+	    		(x + 1, y - 2), 
+	    		(x + 1, y - 1), 
+	    		(x + 1, y), 
+	    		(x + 1, y + 1),
+	    		
+	    		(x + 2, y - 2), 
+	    		(x + 2, y - 1), 
+	    		(x + 2, y), 
+	    		(x + 2, y + 1)
+	    )
+	    // if player still has walls left
+	    if (board.nbWalls(player) > 0) {
+	    	for (item <- positions) {	  	    	  
+		      // if still inside the ground
+		      if (item._1 >= 0 && item._1 < board.size - 1 && item._2 >= 0 && item._2 < board.size - 1) {
+		    	  // horizon
+			      if (!moves.exists(_ == (("WH", item._1, item._2)))) {
+			        if (board.isWallPossibleHere((item._1, item._2), true))
+			            moves.append(("WH", item._1, item._2))
+			      }
+			      
+			      // vertical
+			      if (!moves.exists(_ == (("WV", item._1, item._2)))) {
+			        if (board.isWallPossibleHere((item._1, item._2), false))
+			        	  moves.append(("WV", item._1, item._2))
+			      }
+		      }
+		    }
+	    }
 	  
 	  moves
 	}

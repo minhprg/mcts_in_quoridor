@@ -41,7 +41,7 @@ class MCTS_Quoridor_Par(state:(Quoridor, Int), iterations:Int, timePerMove:Int, 
 	  
 	  //for (i <- 0 until this.itermax) {
 	  // it will stop when still has time
-	  (1 to 1000000).par.foreach(item => {
+	  (1 to 1000000000).par.foreach(item => {
 	    // TIMER CHECK FIRST
 	    if (((endTime - startTime) / 1000 / 1000000) > timePerMove)
 	      break

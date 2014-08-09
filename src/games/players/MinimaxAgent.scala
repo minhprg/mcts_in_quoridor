@@ -66,21 +66,21 @@ class MinimaxAgent {
   def evaluateForSimulation(board:Quoridor, player:Int):Double = {
     var score:Double = 0
         
-    //val SPP = board.minStepsBeforeVictory(player)
-    //val OPP = board.minStepsBeforeVictory((player + 1) % 2)
+    val SPP = board.minStepsBeforeVictory(player)
+    val OPP = board.minStepsBeforeVictory((player + 1) % 2)
     //val player_manhattan = Math.abs(board.pawns(player)._1 - board.goals(player))
     //val opponent_manhattan = Math.abs(board.pawns((player + 1) % 2)._1 - board.goals((player + 1) % 2))
     //val MDP = (9 - player_manhattan) / 9
     //val MDO = (9 - opponent_manhattan) / 9
     
-    //val wall_left = board.nbWalls(player) + board.nbWalls((player + 1) % 2)    
+    val wall_left = board.nbWalls(player) + board.nbWalls((player + 1) % 2)    
     
-    //score = 20 * (MDP - MDO) + 10 * (board.nbWalls(player) - board.nbWalls((player + 1) % 2))
+    //score = 1 * (MDO - MDP) + 1 * (board.nbWalls(player) - board.nbWalls((player + 1) % 2))
     
     //score = 0.747 * SPP + 0.096 * OPP + 0.327 * wall_left
     //score = 20 * (opponent_manhattan - player_manhattan) + 10 + wall_left
-    //score = 0.747 * (81 - SPP) / 81 + 0.096 * (81 - OPP) / 81 + 0.327 * wall_left / 10
-    score = board.getScore(player)
+    score = 0.747 * (81 - SPP) / 81 + 0.096 * (81 - OPP) / 81 + 0.327 * wall_left / 10
+    //score = board.getScore(player)
     
     return score
   }
