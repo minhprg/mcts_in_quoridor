@@ -45,8 +45,8 @@ object QuoridorUtils {
 		    moves += (("P", myway(1)._1, myway(1)._2))
 		  }
 		  // consider walls
-		  //considerWallMoves(way, myway.length, board, player).foreach(f => { moves += f})
-		  considerWallMovesAroundPawnOnly(board, player).foreach(f => { moves += f})
+		  considerWallMoves(way, myway.length, board, player).foreach(f => { moves += f})
+		  //considerWallMovesAroundPawnOnly(board, player).foreach(f => { moves += f})
 	 }
 	 else
 	    board.getLegalPawnMoves(player).foreach(f => { moves += f })
