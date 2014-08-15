@@ -311,7 +311,8 @@ class QuoridorNode (
     val opp = node.board.nbWalls((node.player + 1) % 2)
     val my = node.board.nbWalls(node.player)    
     node.omc_fairness = exp(x1 * my + x2 * opp) // update this value
-    node.omc_fairness
+    //node.omc_fairness
+    0
   }
   
   def factorUrgencyPBBM(node:QuoridorNode):Double = {
@@ -387,9 +388,12 @@ class QuoridorNode (
     })
     
     // store fairness values in node
+    /*
     this.childNodes.foreach(node => {
       node.fairness = ((n_p * node.urgency) / (node.visits * totalUrgency)) + factorFairnessOMC(node)
     })
+    * 
+    */
     
     // sort and select
     val m:QuoridorNode = this.childNodes.sortWith(
