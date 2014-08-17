@@ -294,38 +294,37 @@ class QuoridorNode (
   
   def factorUrgencyOMC(node:QuoridorNode):Double = {
     // only add this portion if this is a pawn move
-    if (node.move._1 == "P") {
-      val x1 = 0.5
-      val x2 = 0.05
+    //if (node.move._1 == "P") {
+      val x1 = 1
+      val x2 = 0.5
       val opp = node.board.nbWalls((node.player + 1) % 2)
       val my = node.board.nbWalls(node.player)    
       node.omc_urgency = (x1 * my + x2 * opp) / (my + opp) // update this value
       node.omc_urgency
-    }
-    0    
+    //}
+    //0 
   }
   
   def factorFairnessOMC(node:QuoridorNode):Double = {
-    val x1 = 0.1
-    val x2 = 0.05
+    val x1 = 0.36
+    val x2 = 0.005
     val opp = node.board.nbWalls((node.player + 1) % 2)
     val my = node.board.nbWalls(node.player)    
     node.omc_fairness = exp(x1 * my + x2 * opp) // update this value
-    //node.omc_fairness
-    0
+    node.omc_fairness    
   }
   
   def factorUrgencyPBBM(node:QuoridorNode):Double = {
     // only add this portion if this is a pawn move
-    if (node.move._1 == "P") {
+    //if (node.move._1 == "P") {
       val x1 = 0.5
       val x2 = 0.05
       val opp = node.board.nbWalls((node.player + 1) % 2)
       val my = node.board.nbWalls(node.player)    
       node.pbbm_urgency = (x1 * my + x2 * opp) / (my + opp) // update this value
       node.pbbm_urgency
-    }
-    0    
+    //}
+    //0    
   }
   
   def factorFairnessPBBM(node:QuoridorNode):Double = {
@@ -388,12 +387,9 @@ class QuoridorNode (
     })
     
     // store fairness values in node
-    /*
     this.childNodes.foreach(node => {
       node.fairness = ((n_p * node.urgency) / (node.visits * totalUrgency)) + factorFairnessOMC(node)
     })
-    * 
-    */
     
     // sort and select
     val m:QuoridorNode = this.childNodes.sortWith(
