@@ -45,6 +45,14 @@ class Player(strategyType:String) extends Agent {
 	    return agent.play(percepts, player, step)
 	  }
 	  
+	  /**
+	   * HUMAN PROGRAM
+	   */
+	  if (agentType == "human") {
+	    var agent = new HumanAgent()
+	    return agent.play(percepts, player, step)
+	  }
+	  
 	  throw new Exception("Failed to playQuoridor in class games.Player!")
   }
 }
