@@ -9,6 +9,7 @@ object Main extends App {
   override def main(args:Array[String]) = {
     // constructor right here
     println("Welcome to mcts games")
+    println("Argument length = " + args.length)
         
     // receive arguments
     // 1. game {quoridor}
